@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.8 1999/08/16 16:26:24 tek Exp $
+# $Id: zshrc,v 1.9 1999/08/16 16:33:57 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -13,6 +13,11 @@ PS3='%n@%m>> '
 PS4='%n@%m>>> '
 
 PATH=$HOME/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
+
+tput init 2>&1 > /dev/null
+if [ $? -eq 3 ]; then
+  export TERM=vt100
+fi
 
 if [ `uname` = "SunOS" ]; then
   LS_OPTIONS=-F
