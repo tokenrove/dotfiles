@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id$
+# $Id: zshrc,v 1.2 1999/07/21 15:42:09 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -55,6 +55,8 @@ alias info='emacs -f info'
 
 if [ ! -f /etc/redhat.release ]; then
   alias less='zless'
+else
+  alias less=less
 fi
 
 #function dmalloc { eval `command dmalloc -b $*` }
