@@ -463,7 +463,7 @@
           m "Revised: " (current-time-string) " (pending)\n"
           m "Copyright " (Year) " " (Full-Name) " (" (Email-Address) ")\n"
           m "This program comes with ABSOLUTELY NO WARRANTY.\n"
-	  m "$Id: emacs,v 1.3 1999/08/16 18:15:05 tek Exp $\n")
+	  m "$" "Id" "$\n")
   (if (not (string-equal m l)) (insert m "\n"))
   (insert l "\n")
   (insert "\n" f "EOF " filename l)

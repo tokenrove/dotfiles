@@ -1,11 +1,11 @@
 # Tek's muttrc
 #
-# $Id: muttrc,v 1.2 1999/08/06 13:14:37 tek Exp $
+# $Id: muttrc,v 1.3 1999/08/08 01:47:49 tek Exp $
 #
 set folder=~/Mail
 set arrow_cursor
 set copy=yes
-set editor='$EDITOR -nw'
+set editor=$EDITOR
 set nomark_old
 set mbox=+oldmail
 set postponed=+postponed
