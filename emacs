@@ -4,8 +4,13 @@
 
 ;; First, some nice stuff borrowed from Rik Faith
 
+(require 'delbs.el)
+
 (setq enable-local-variables  1)
 (setq gc-cons-threshold 1000000)
+
+     (if (eq 'tty (device-type))
+         (set-device-class nil 'color))
 
 ;;; These version examination commands are from etc/sample.emacs in the
 ;;; XEmacs 19.13 distribution.
@@ -274,7 +279,7 @@
     (c-echo-syntactic-information-p . nil)
     (c-electric-pound-behavior      . 'alignleft)
     (c-recognize-knr-p              . nil)
-    (c-hanging-braces-alist         . ((substatement-open after)
+    (c-hanging-braces-alist         . ((substatement-open before)
                                        (brace-list-open)))
     (c-hanging-colons-alist         . ((member-init-intro before)
                                        (inher-intro)
@@ -292,21 +297,21 @@
                                        (statement-cont . c-lineup-math)))
     ))
 
-(setq c-default-style "user")
+(setq c-default-style 'my-c-style)
 (setq c-style-variables-are-local-p t)
 
 ;; Customizations for both c-mode and c++-mode
 (defun my-c-mode-common-hook ()
   ;; set up for my perferred indentation style, but  only do it once
-;  (or (assoc "faith" c-style-alist)
-;      (setq c-style-alist (cons my-c-style c-style-alist)))
-;  (c-set-style "faith")
-;  ;; other customizations
-;  (setq tab-width 8
-;        ;; this will make sure spaces are used instead of tabs
-;        indent-tabs-mode nil)
+  (or (assoc "user" c-style-alist)
+      (setq c-style-alist (cons my-c-style c-style-alist)))
+  (c-set-style "user")
+  ;; other customizations
+  (setq tab-width 8
+        ;; this will make sure spaces are used instead of tabs
+        indent-tabs-mode nil)
   ;; we (might) like auto-newline and hungry-delete
-;  (c-toggle-auto-hungry-state -1)
+  (c-toggle-auto-hungry-state -1)
   ;; keybindings for C, C++, and Objective-C.  We can put these in
   ;; c-mode-map because c++-mode-map and objc-mode-map inherit it
   (define-key c-mode-map "\C-m" 'newline-and-indent)
@@ -458,7 +463,7 @@
           m "Revised: " (current-time-string) " (pending)\n"
           m "Copyright " (Year) " " (Full-Name) " (" (Email-Address) ")\n"
           m "This program comes with ABSOLUTELY NO WARRANTY.\n"
-	  m "$Id$\n")
+	  m "$Id: emacs,v 1.2 1999/08/08 01:47:49 tek Exp $\n")
   (if (not (string-equal m l)) (insert m "\n"))
   (insert l "\n")
   (insert "\n" f "EOF " filename l)

@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.9 1999/08/16 16:33:57 tek Exp $
+# $Id: zshrc,v 1.10 1999/08/16 16:38:43 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -21,13 +21,17 @@ fi
 
 if [ `uname` = "SunOS" ]; then
   LS_OPTIONS=-F
-  PATH=$PATH:/usr/X/bin:/usr/ucb:/opt/SUNWspro/bin:/usr/ccs/bin
+  PATH=$PATH:/usr/X/bin:/usr/ucb:/opt/SUNWspro/bin:/opt/gcc-2.95/bin:\
+/opt/perl5/bin:/usr/ccs/bin
 else
   LS_OPTIONS=(-F --color=tty)
   PATH=$PATH:/usr/X11R6/bin:/usr/games:/usr/local/netscape
 fi
 
 WATCH='all'
+
+
+HOSTNAME=`hostname`
 
 DOMNAME="baddomainname"
 if [ -x dnsdomainname -o -x `where dnsdomainname` -o -x ~/bin/dnsdomainname ]; then
@@ -44,6 +48,8 @@ else
 fi
 
 PAGER=less
+
+stty erase ^H
 
 case $HOSTNAME in
   distorted) 
