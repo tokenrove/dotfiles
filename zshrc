@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.13 1999/11/21 12:25:41 tek Exp $
+# $Id: zshrc,v 1.14 1999/11/26 07:09:19 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -104,27 +104,13 @@ cat ~/.todo
 
 # EOF zshrc
 #
-# This file gives examples of possible programmable completions (compctl).
-# You can either put the compctl commands in your .zshrc file, or put them
-# in a separate file (say .zcompctl) and source it from your .zshrc file.
-#
-# These are just examples. Use and modify to personal taste.  Copying
-# this file without thought will needlessly increase zsh's memory usage
-# and startup time.
-#
-# For a detailed description of how these work, check the zshcompctl man
-# page.
+# completions (lots taken from the examples)
 #
 #------------------------------------------------------------------------------
 hosts=( ${(s: :)${(ps:\t:)${${(f)"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}} )
 ports=( "${(@)${(@)${(@f)$(</etc/services)}:#\#*}%%[ 	]*}" )
 
-# groups=( $(cut -d: -f1 /etc/group) )
-# groups=( $(ypcat group.byname | cut -d: -f1) ) # if you use NIS
-
-# It can be done without forking, but it used too much memory in old zsh's:
 groups=( ${${(s: :)$(</etc/group)}%%:*} )
-#groups=( ${${(s: :)$(ypcat groups)}%%:*} ) # if you use NIS
 
 # Completion for zsh builtins.
 compctl -z -P '%' bg
@@ -820,3 +806,93 @@ compctl -/g "*(*)" \
 	- "C[-1,(-symbols|-command|-x)]" -f \
 	- "p[2,-1] C[-1,[^-]*]" -/g "core*" \
 	-- gdb
+#############################################################################
+# Dpkg completion control for zsh.
+#
+# NOTE: These commands (dpkg, dpkg-source, bug) are included
+# upstream as part of the new completion system.  Consider
+# using that instead.
+#
+# Originally by Joey Hess <joey@kite.ml.org>, GPL copyright.
+# Contributions and fixes from Karl Hegbloom, Fabien Ninoles,
+# Gregor Hoffleit, Csaba Benedek, &c.
+#
+# Currently doesn't handle correctly:
+#       Options after -D or --debug.
+#       --force- and friends,--ignore-depends,--root= and friends.
+
+# A function to return all available package names.
+function DpkgPackages {
+        reply=(`egrep ^Package: /var/lib/dpkg/status | awk '{ print $2 }'`)
+}
+
+# This array lists all the dpkg options and actions.
+dpkg_options=(-i --install --unpack --configure -r --remove --purge -A \
+--avail --update-avail --merge-avail --yet-to-unpack -l --list -L \
+--listfiles -C --audit -S --search -s --status --help -c --contents -I \
+--info -B --auto-deconfigure -D --debug --largemem --smallmem --no-act \
+-R --recursive -G -O --selected-only -E -e --control --skip-same-version \
+-x --extract -f --field --fsys-tarfile -X --vextract --licence --version \
+-b --build)
+
+# This string lists all dpkg actions that operate on *.deb files, 
+# separated by |'s. There can't be any extra whitespace in it!
+dpkg_deb_actions="-i|--install|--unpack|-A|--avail|-c|--contents|-I|--info|-e"
+dpkg_deb_actions="$dpkg_deb_actions|--control|-x|--extract|-f|--field"
+dpkg_deb_actions="$dpkg_deb_actions|--fsys-tarfile|-X|--vextract|-info"
+
+# This string lists all dpkg actions that normally operate on *.deb files,
+# but can operate on directory names if the --recursive option is given to 
+# dpkg.
+dpkg_deb_rec_actions="-i|--install|--unpack|-A|--avail"
+
+# This string lists all other dpkg actions that take a directory name as 
+# their first parameter, and a filename as their second parameter.
+dpkg_df_actions="-b|--build"
+
+# This string lists dpkg actions that take a directory name as 
+# their second parameter.
+dpkg_dir2_actions="-e|--control|-x|--extract|--vextract"
+
+# This string lists all dpkg actions that take a filename as their first
+# parameter (ie, a Packages file).
+dpkg_file_actions="-S|--search|--update-avail|--merge-avail"
+
+# This string lists all dpkg actions that operate on the names of packages
+# and can also be used with the --pending option.
+dpkg_pkg_pending_actions="--configure|-r|--remove|--purge|-s|--status"
+
+# This string lists all other dpkg actions that operate on the names of 
+# packages.
+dpkg_pkg_actions="-L|--listfiles|-s|--status|-l|--list"
+
+# Now the command that puts it all together..
+compctl -k dpkg_options \
+  -x "C[-1,$dpkg_deb_rec_actions],R[-R|--recursive,]" -g '*(-/D)' \
+  - "C[-1,$dpkg_deb_actions]" -g '*.deb' + -g '*(-/D)' \
+  - "C[-1,$dpkg_pkg_pending_actions]" -K DpkgPackages + -k "(-a,--pending)" \
+  - "C[-1,$dpkg_pkg_actions]" -K DpkgPackages \
+  - "C[-1,$dpkg_file_actions],C[-2,$dpkg_df_actions]" -f \
+  - "C[-2,$dpkg_dir2_actions],C[-1,$dpkg_df_actions]" -g '*(-/D)' \
+  -- dpkg
+
+# Also, set up package name completion for bug program.
+compctl -K DpkgPackages bug
+
+# This section by Karl M. Hegbloom
+
+dpkg_source_options=(-x -b -c -l -F -V -T -D -U \
+-sa -sk -sp -su -sr -ss -sn -sA -sK -sP -sU -sR \
+-h --help)
+
+compctl -k dpkg_source_options \
+ -x "C[-1,-x]" -g '*.dsc' \
+ - "C[-1,-b]" -g '*(-/D)' \
+ -- dpkg-source
+
+# Unset the temporary variables.
+unset dpkg_deb_actions dpkg_deb_rec_actions dpkg_df_actions \
+        dpkg_dir2_actions dpkg_file_actions dpkg_pkg_pending_actions \
+        dpkg_pkg_actions # dpkg_source_options dpkg_options
+
+#############################################################################
