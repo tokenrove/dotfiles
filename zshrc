@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.12 1999/08/17 15:06:18 tek Exp $
+# $Id: zshrc,v 1.13 1999/11/21 12:25:41 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -169,7 +169,7 @@ compctl -x 'p[1]' -c - 'p[2,-1]' -k signals -- trap
 #------------------------------------------------------------------------------
 # kill takes signal names as the first argument after -, but job names after %
 # or PIDs as a last resort
-compctl -j -P '%' + -s '`ps -x | tail +2 | cut -c1-5`' + \
+compctl -j -P '%' + -s '`ps x | tail +2 | cut -c1-5`' + \
 	-x 's[-] p[1]' -k "($signals[1,-3])" -- kill
 #------------------------------------------------------------------------------
 compctl -s '$(groups)' + -k groups newgrp
