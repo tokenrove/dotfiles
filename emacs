@@ -358,6 +358,7 @@
                 ("\\.C$"       . c++-mode)
                 ("\\.cc$"      . c++-mode)
                 ("\\.cpp$"     . c++-mode)
+                ("\\.hh$"      . c++-mode)
                 ; closest we've got
                 ("\\.idl$"     . c++-mode)
 
@@ -785,7 +786,7 @@ l "\n")
             (>= emacs-minor-version 14))
            (= emacs-major-version 20))
        (fboundp 'load-options-file))
-  (load-options-file "$HOME/.xemacs-options")))
+  (load-options-file "/home/tek/.xemacs-options")))
 ;; ============================
 ;; End of Options Menu Settings
 
