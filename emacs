@@ -271,9 +271,6 @@
 (autoload 'c-mode    "cc-mode" "C Editing Mode" t)
 (autoload 'objc-mode "cc-mode" "Objective-C Editing Mode" t)
 
-(setq c-style-variables-are-local-p t)
-(setq c-default-style "tek")
-
 ;; Customizations for both c-mode and c++-mode
 (defun my-c-mode-common-hook ()
   ;; set up for my perferred indentation style, but  only do it once
@@ -306,6 +303,9 @@
                                        (statement-cont . c-lineup-math)))
    ))
 
+  (setq c-style-variables-are-local-p t)
+  (setq c-default-style "tek")
+
   ;; other customizations
   (setq tab-width 8
         ;; this will make sure spaces are used instead of tabs
@@ -315,7 +315,7 @@
   ;; keybindings for C, C++, and Objective-C.  We can put these in
   ;; c-mode-map because c++-mode-map and objc-mode-map inherit it
   (define-key c-mode-map "\C-m" 'newline-and-indent)
-  (setq modeline-format "--%+%&--L%l--%m-%M-%-")
+  (setq modeline-format "--%+%&--L%l--%m--%-")
   (setq fume-display-in-modeline-p t)
   )
 
