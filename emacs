@@ -1,5 +1,5 @@
 ;;
-;; Tek (tek@wiw.org)'s emacs setup
+;; Teknovore (tek@wiw.org)'s emacs setup
 ;;
 
 ;; First, some nice stuff borrowed from Rik Faith
@@ -271,8 +271,16 @@
 (autoload 'c-mode    "cc-mode" "C Editing Mode" t)
 (autoload 'objc-mode "cc-mode" "Objective-C Editing Mode" t)
 
-(defconst my-c-style
-    '("user"
+(setq c-style-variables-are-local-p t)
+(setq c-default-style "tek")
+
+;; Customizations for both c-mode and c++-mode
+(defun my-c-mode-common-hook ()
+  ;; set up for my perferred indentation style, but  only do it once
+;;  (or (assoc "tek" c-style-alist)
+;;      (setq c-style-alist (cons c-style-alist my-c-style)))
+  (c-add-style "tek"
+	`( "stroustrup"
     (c-basic-offset                 . 4)
     (c-block-comments-indent-p      . nil)
     (c-tab-always-indent            . t)
@@ -296,17 +304,8 @@
                                        (substatement-open . 0)
                                        (label . -)
                                        (statement-cont . c-lineup-math)))
-    ))
+   ))
 
-(setq c-default-style "user")
-(setq c-style-variables-are-local-p t)
-
-;; Customizations for both c-mode and c++-mode
-(defun my-c-mode-common-hook ()
-  ;; set up for my perferred indentation style, but  only do it once
-  (or (assoc "user" c-style-alist)
-      (setq c-style-alist (cons my-c-style c-style-alist)))
-  (c-set-style "user")
   ;; other customizations
   (setq tab-width 8
         ;; this will make sure spaces are used instead of tabs
@@ -316,6 +315,8 @@
   ;; keybindings for C, C++, and Objective-C.  We can put these in
   ;; c-mode-map because c++-mode-map and objc-mode-map inherit it
   (define-key c-mode-map "\C-m" 'newline-and-indent)
+  (setq modeline-format "--%+%&--L%l--%m-%M-%-")
+  (setq fume-display-in-modeline-p t)
   )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
