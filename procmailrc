@@ -1,6 +1,6 @@
 # Tek's procmailrc
 #
-# $Id: procmailrc,v 1.5 1999/08/08 01:47:49 tek Exp $
+# $Id: procmailrc,v 1.6 1999/09/01 15:05:41 tek Exp $
 #
 # Note: we should use m4 to generate this
 #
@@ -11,6 +11,28 @@ DEFAULT=$MAILDIR/inbox
 LOGFILE=$MAILDIR/from
 LOCKFILE=$HOME/.lockmail
 
+#
+# handle pgp fu elegantly
+#:0 c
+#* !^Content-Type: message/
+#* !^Content-Type: multipart/
+#* !^Content-Type: application/pgp
+#{
+#        :0 fBw
+#        * ^-----BEGIN PGP MESSAGE-----
+#        * ^-----END PGP MESSAGE-----
+#        | formail \
+#            -i "Content-Type: application/pgp; format=text; x-action=encrypt"
+
+#        :0 fBw
+#        * ^-----BEGIN PGP SIGNED MESSAGE-----
+#        * ^-----BEGIN PGP SIGNATURE-----
+#        * ^-----END PGP SIGNATURE-----
+#        | formail \
+#            -i "Content-Type: application/pgp; format=text; x-action=sign"
+#}
+
+
 # Cypherpunks-L
 :0 c				# Anything from Cypherpunks*-L
 * ^Sender: .*owner-cypherpunks@.*
@@ -18,16 +40,25 @@ cypherpunks			# will go to $MAILDIR/cypherpunks
 # and then
 :0
 * ^Sender: .*owner-cypherpunks@.*
-!cp@unslider.lisc.org           # get forwarded to unS
+!lists-cypherpunks@unslider.lisc.org           # get forwarded to unS
+
+# Coderpunks-L
+:0 c				# Anything from Coderpunks*-L
+* ^Sender: .*owner-coderpunks@.*
+coderpunks			# will go to $MAILDIR/coderpunks
+# and then
+:0
+* ^Sender: .*owner-coderpunks@.*
+!lists-coderpunks@unslider.lisc.org           # get forwarded to unS
 
 # stellalist
 :0				# Anything from Stellalist
-* ^Sender: .*owner-stella@biglist.com
+* ^Sender: .*owner-stella@biglist.com.*
 stellalist 			# will go to $MAILDIR/stellalist
 
 # penguin
 :0
-* ^Sender: .*owner-penguin@canuck.gen.nz
+* ^Sender: .*owner-penguin@canuck.gen.nz.*
 penguin
 
 # Stegano-L
@@ -37,11 +68,11 @@ stegano
 
 # GSL-fu
 :0
-* ^To: .*gsl-cvs.*
+* ^TO gsl-cvs.*
 gsl-cvs
 
 :0
-* ^Sender: .*gsl-announce.*
+* ^TO .*gsl-announce.*
 gsl-announce
 
 :0
@@ -50,8 +81,23 @@ gsl-discuss
 
 # bugtraq
 :0
-* ^Sender: .*bugtraq@securityfocus.*
+* ^Sender: .*BUGTRAQ@SECURITYFOCUS.COM.*
 bugtraq
+
+# pen-test
+:0
+* ^FROM_DAEMON.*PEN-TEST@SECURITYFOCUS.COM
+pen-test
+
+# linux-ipsec
+:0
+* ^FROM_DAEMON.*linux-ipsec
+linux-ipsec
+
+# linux-kernel
+:0
+* ^FROM_DAEMON.*linux-kernel
+linux-kernel
 
 # OOC support list
 :0
