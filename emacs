@@ -4,7 +4,7 @@
 
 ;; First, some nice stuff borrowed from Rik Faith
 
-(require 'delbs.el)
+;;(require 'delbs.el)
 
 (setq enable-local-variables  1)
 (setq gc-cons-threshold 1000000)
@@ -463,7 +463,7 @@
           m "Revised: " (current-time-string) " (pending)\n"
           m "Copyright " (Year) " " (Full-Name) " (" (Email-Address) ")\n"
           m "This program comes with ABSOLUTELY NO WARRANTY.\n"
-	  m "$Id: emacs,v 1.2 1999/08/08 01:47:49 tek Exp $\n")
+	  m "$Id: emacs,v 1.3 1999/08/16 18:15:05 tek Exp $\n")
   (if (not (string-equal m l)) (insert m "\n"))
   (insert l "\n")
   (insert "\n" f "EOF " filename l)
