@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.7 1999/08/16 16:10:48 tek Exp $
+# $Id: zshrc,v 1.8 1999/08/16 16:26:24 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -12,7 +12,7 @@ PS2='%n@%m> '
 PS3='%n@%m>> '
 PS4='%n@%m>>> '
 
-PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
+PATH=$HOME/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
 
 if [ `uname` = "SunOS" ]; then
   LS_OPTIONS=-F
