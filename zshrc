@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.6 1999/08/13 03:34:27 tek Exp $
+# $Id: zshrc,v 1.7 1999/08/16 16:10:48 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -25,9 +25,7 @@ fi
 WATCH='all'
 
 DOMNAME="baddomainname"
-if [ -x dnsdomainname 
-  -o -x `where dnsdomainname` 
-  -o -x ~/bin/dnsdomainname ]; then
+if [ -x dnsdomainname -o -x `where dnsdomainname` -o -x ~/bin/dnsdomainname ]; then
   DOMNAME=`dnsdomainname`
 else
   DOMNAME=`domainname`
