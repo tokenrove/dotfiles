@@ -1,6 +1,6 @@
 # Tek's muttrc
 #
-# $Id$
+# $Id: muttrc,v 1.1 1999/07/21 15:42:08 tek Exp $
 #
 set folder=~/Mail
 set arrow_cursor
@@ -30,7 +30,7 @@ bind generic \e< first-entry
 bind generic \e> last-entry
 bind generic \cl current-middle
 # mailboxes
-mailboxes +inbox +support +cypherpunks +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs
+mailboxes +inbox +support +cypherpunks +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob
 my_hdr From: $EMAILADDRESS
 
 alias matthew Matthew Newhook <matthew@ooc.com>
