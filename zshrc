@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.5 1999/08/11 18:28:48 tek Exp $
+# $Id: zshrc,v 1.6 1999/08/13 03:34:27 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -22,18 +22,12 @@ else
   PATH=$PATH:/usr/X11R6/bin:/usr/games:/usr/local/netscape
 fi
 
-alias emacs='xemacs20'
-EDITOR='xemacs20 -nw'
-
-VISUAL=$EDITOR
-CVSEDITOR=$EDITOR
-CVSROOT="tek@distorted.wiw.org:/home/tek/cvs"
-CVS_RSH="ssh"
-
-PAGER='less'
 WATCH='all'
 
-if [ -x dnsdomainname ]; then
+DOMNAME="baddomainname"
+if [ -x dnsdomainname 
+  -o -x `where dnsdomainname` 
+  -o -x ~/bin/dnsdomainname ]; then
   DOMNAME=`dnsdomainname`
 else
   DOMNAME=`domainname`
@@ -45,6 +39,32 @@ then
 else
   EMAILADDRESS=js@ooc.com
 fi
+
+PAGER=less
+
+case $HOSTNAME in
+  distorted) 
+  	EMACS=/usr/bin/xemacs20
+	alias less=zless
+        ;;
+  moe) 
+	EMACS=/usr/bin/xemacs-20.4-nomule
+	;;
+  ned) 
+	EMACS=/opt/SUNWspro/bin/xemacs-20.4 
+	;;
+  *) 
+	EMACS=/usr/bin/emacs 
+	;;
+esac  
+
+alias emacs=$EMACS
+EDITOR=$EMACS
+
+VISUAL=$EDITOR
+CVSEDITOR=$EDITOR
+CVSROOT="tek@distorted.wiw.org:/home/tek/cvs"
+CVS_RSH="ssh"
 
 NNTPSERVER="news.thezone.net"
 FULLNAME="Julian E. C. Squires"
