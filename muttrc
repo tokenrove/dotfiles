@@ -1,0 +1,41 @@
+# Tek's muttrc
+#
+# $Id$
+#
+set folder=~/Mail
+set arrow_cursor
+set copy=yes
+set editor="$EDITOR -nw"
+set nomark_old
+set mbox=+oldmail
+set postponed=+postponed
+set record=+sentmail
+set reply_to
+set reply_regexp="^([rR][Ee]:[ \t]*)+"
+set reverse_name
+set sort=threads
+set pgp_verify_sig
+set pgp_autosign
+set pgp_replyencrypt
+set pgp_replysign
+unignore *
+# emacslike keys
+bind pager \cv next-page
+bind pager \ev previous-page
+bind pager \e< top
+bind pager \e> bottom
+bind generic \cv next-page
+bind generic \ev previous-page
+bind generic \e< first-entry
+bind generic \e> last-entry
+bind generic \cl current-middle
+# mailboxes
+mailboxes +inbox +support +cypherpunks +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs
+my_hdr From: $EMAILADDRESS
+
+alias matthew Matthew Newhook <matthew@ooc.com>
+alias dbarnes Daniel Barnes <dbarnes@www.wordplay.com>
+alias craig Craig Cook <craig@mediatouch.com>
+alias ayoung Andrew Young <ayoung@greenrock.com>
+
+# EOF muttrc
