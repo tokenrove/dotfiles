@@ -9,8 +9,9 @@
 (setq enable-local-variables  1)
 (setq gc-cons-threshold 1000000)
 
-     (if (eq 'tty (device-type))
-         (set-device-class nil 'color))
+(if (boundp 'device-type)
+    (if (eq 'tty (device-type))
+        (set-device-class nil 'color)))
 
 ;;; These version examination commands are from etc/sample.emacs in the
 ;;; XEmacs 19.13 distribution.
@@ -297,7 +298,7 @@
                                        (statement-cont . c-lineup-math)))
     ))
 
-(setq c-default-style 'my-c-style)
+(setq c-default-style "user")
 (setq c-style-variables-are-local-p t)
 
 ;; Customizations for both c-mode and c++-mode

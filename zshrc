@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.10 1999/08/16 16:38:43 tek Exp $
+# $Id: zshrc,v 1.11 1999/08/16 18:15:05 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -63,7 +63,11 @@ case $HOSTNAME in
 	EMACS=/opt/SUNWspro/bin/xemacs-20.4 
 	;;
   *) 
-	EMACS=/usr/bin/emacs 
+        if [ -x `where xemacs` ]; then
+          EMACS=`where xemacs`
+        else
+	  EMACS=/usr/bin/emacs 
+        fi
 	;;
 esac  
 
