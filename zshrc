@@ -1,39 +1,45 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.3 1999/01/01 20:43:49 tek Exp $
+# $Id: zshrc,v 1.4 1999/08/08 01:47:49 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
 standout,showexp,showscore,color,hilite_pet,menustyle:Full,name:Teknovore"
 
-PATH=$HOME/bin:/usr/bin:/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/sbin\
-:/usr/X11R6/bin:/usr/games:/usr/local/netscape
 
 PS1='%n@%m:%~%# '
 PS2='%n@%m> '
 PS3='%n@%m>> '
 PS4='%n@%m>>> '
 
-LS_OPTIONS=(-F --color=tty)
+PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
 
-
-if [ -x /usr/bin/xemacs20 ]; then
-  alias emacs='xemacs20'
-  EDITOR='/usr/bin/xemacs20 -nw'
+if [ `uname` = "SunOS" ]; then
+  LS_OPTIONS=-F
+  PATH=$PATH:/opt/SUNWspro/bin:/usr/ccs/bin
 else
-  alias emacs='emacs -nw'
-  EDITOR="emacs -nw"
+  LS_OPTIONS=(-F --color=tty)
+  PATH=$PATH:/usr/X11R6/bin:/usr/games:/usr/local/netscape
 fi
+
+alias emacs='xemacs20'
+EDITOR='xemacs20 -nw'
 
 VISUAL=$EDITOR
 CVSEDITOR=$EDITOR
-CVSROOT="$HOME/cvs"
+CVSROOT="tek@distorted.wiw.org:/home/tek/cvs"
 CVS_RSH="ssh"
 
 PAGER='less'
 WATCH='all'
 
-if [ `dnsdomainname` = "mu.shrooms.com" -o `dnsdomainname` = "wiw.org" ]
+if [ -x dnsdomainname ]; then
+  DOMNAME=`dnsdomainname`
+else
+  DOMNAME=`domainname`
+fi
+
+if [ $DOMNAME = "mu.shrooms.com" -o $DOMNAME = "wiw.org" ]
 then
   EMAILADDRESS=tek@wiw.org
 else
@@ -53,14 +59,8 @@ setopt AUTO_MENU NO_BEEP NO_BAD_PATTERN
 alias ls='ls $LS_OPTIONS'
 
 #alias x='startx -- -bpp 16'
-alias root='su -c bash'
+alias root='su -c sh'
 alias info='emacs -f info'
-
-if [ ! -f /etc/redhat.release ]; then
-  alias less='zless'
-else
-  alias less=less
-fi
 
 #function dmalloc { eval `command dmalloc -b $*` }
 
