@@ -1,6 +1,6 @@
 # Tek's procmailrc
 #
-# $Id: procmailrc,v 1.1 1999/07/21 15:59:50 tek Exp $
+# $Id: procmailrc,v 1.2 1999/07/21 17:14:04 tek Exp $
 #
 # Note: we should use m4 to generate this
 #
@@ -55,8 +55,7 @@ bugtraq
 
 # OOC support list
 :0
-* ^T[oO][: ].*support@ooc.*
-* ^C[cC][: ].*support@ooc.*
+* .*support@ooc.*
 support
 
 # Anything left, from me
