@@ -315,7 +315,7 @@
   ;; keybindings for C, C++, and Objective-C.  We can put these in
   ;; c-mode-map because c++-mode-map and objc-mode-map inherit it
   (define-key c-mode-map "\C-m" 'newline-and-indent)
-  (setq modeline-format "--%+%&--L%l--%m--%-")
+  (setq modeline-format "--%+%&--L%l--%b-(%m)--%-")
   (setq fume-display-in-modeline-p t)
   )
 
