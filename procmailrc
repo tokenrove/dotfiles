@@ -1,18 +1,19 @@
 # Tek's procmailrc
 #
-# $Id: procmailrc,v 1.6 1999/09/01 15:05:41 tek Exp $
+# $Id: procmailrc,v 1.7 2000/08/18 16:29:46 tek Exp $
 #
 # Note: we should use m4 to generate this
 #
 
+SHELL=/bin/sh
 PATH=$HOME/bin:/usr/bin:/bin:/usr/local/bin
-MAILDIR=$HOME/Mail	# You'd better make sure it exists
+MAILDIR=$HOME/Mail
 DEFAULT=$MAILDIR/inbox
 LOGFILE=$MAILDIR/from
 LOCKFILE=$HOME/.lockmail
 
 #
-# handle pgp fu elegantly
+# handle pgp fu elegantly [broken]
 #:0 c
 #* !^Content-Type: message/
 #* !^Content-Type: multipart/
@@ -32,96 +33,81 @@ LOCKFILE=$HOME/.lockmail
 #            -i "Content-Type: application/pgp; format=text; x-action=sign"
 #}
 
-
-# Cypherpunks-L
-:0 c				# Anything from Cypherpunks*-L
-* ^Sender: .*owner-cypherpunks@.*
-cypherpunks			# will go to $MAILDIR/cypherpunks
-# and then
+# spam catchers
 :0
-* ^Sender: .*owner-cypherpunks@.*
-!lists-cypherpunks@unslider.lisc.org           # get forwarded to unS
+* -2^0
+* 1^0 ^Subject:.*make
+* 1^0 ^Subject:.*earn
+* 1^0 ^Subject:.*money
+* 1^0 ^Subject:.*free
+* 1^0 ^Subject:.*fast
+* 2^0 ^Subject:.*\$\$\$
+* 1^0 ^Subject:.*\#[0-9]+
+* 1^0 ^Subject:.*[0-9]+$
+* 1^0 ^Subject:.*\([0-9]+\)\$
+* 1^0 ^Subject:.*claim
+* 1^0 ^Subject:.*prize
+* 1^0 ^Subject:.*enlarge
+* 1^0 ^Subject:.*breast
+* 1^0 ^Subject:.*cup
+* 1^0 ^Subject:.*guarantee
+* 1^0 ^Subject:.*weight
+* 1^0 ^Subject:.*loss
+* 3^0 ^Subject:.*boost.*windows.*reli
+* 3^0 ^Subject:.*Are YOU Ready For Wealth & Freedom
+* 3^0 ^Subject: Read If Serious About Your Career Path
+* 2^0 ^Subject:.*CASH.*GRANTS
+* 2^0 ^Subject:.*NEVER.*REPAY
+* 3^0 ^Subject:.*contest.*confirmation
+* 3^0 ^Subject:.*LIMITED TIME ONLY!!!!!!!!!!
+* 3^0 ^Subject:.*If you need to lose 10,20,30 pounds or more, Please READ THIS!!!!!
+* 3^0 ^Subject:.*Something EVERY Business Needs!
+* 2^0 ^Subject:.*Credit Rateing
+* 3^0 ^Subject:.*need tax help
+* 3^0 ^Subject:.*Increase Sales, Accept Credit Cards!
+* 3^0 ^Subject:.*Highest Rated Online Casino...
+* 3^0 ^Subject:.*The Web's Most Powerful Home Based Business!
+spam
+
+# mailing lists
+:0
+* ^TOrhombus
+rhombus
 
 # Coderpunks-L
-:0 c				# Anything from Coderpunks*-L
-* ^Sender: .*owner-coderpunks@.*
-coderpunks			# will go to $MAILDIR/coderpunks
-# and then
 :0
-* ^Sender: .*owner-coderpunks@.*
-!lists-coderpunks@unslider.lisc.org           # get forwarded to unS
+* ^TOcoderpunks
+coderpunks
 
 # stellalist
 :0				# Anything from Stellalist
-* ^Sender: .*owner-stella@biglist.com.*
+* ^TOstella@biglist
 stellalist 			# will go to $MAILDIR/stellalist
 
 # penguin
 :0
-* ^Sender: .*owner-penguin@canuck.gen.nz.*
+* ^TOpenguin
 penguin
-
-# Stegano-L
-:0
-* ^Sender: .*stegano.*@as-node.jena.thur.de
-stegano
 
 # GSL-fu
 :0
-* ^TO gsl-cvs.*
-gsl-cvs
-
-:0
-* ^TO .*gsl-announce.*
+* ^TOgsl-announce
 gsl-announce
 
+# Lua-L
 :0
-* ^Sender: .*gsl-discuss.*
-gsl-discuss
+* ^TOlua-l
+lua
 
 # bugtraq
 :0
-* ^Sender: .*BUGTRAQ@SECURITYFOCUS.COM.*
+* ^TOBUGTRAQ
 bugtraq
-
-# pen-test
-:0
-* ^FROM_DAEMON.*PEN-TEST@SECURITYFOCUS.COM
-pen-test
-
-# linux-ipsec
-:0
-* ^FROM_DAEMON.*linux-ipsec
-linux-ipsec
-
-# linux-kernel
-:0
-* ^FROM_DAEMON.*linux-kernel
-linux-kernel
-
-# OOC support list
-:0
-* .*staff@ooc.*
-staff
-
-# OOC support list
-:0
-* .*support@ooc.*
-support
-
-# ORBacus mailing list
-:0
-* .*ob@ooc.*
-ob
 
 # Anything left, from me
 :0
 * ^From: .*tek@wiw.org.*
 tek				# will go to $MAILDIR/tek
-
-:0
-* .*system check.*
-syschk
 
 # Anything that has not been delivered by now will go to $DEFAULT
 # using LOCKFILE=$DEFAULT$LOCKEXT

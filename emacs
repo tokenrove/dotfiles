@@ -392,8 +392,16 @@
 
                 ("\\.fs$"      . forth-mode)
 
+                ("\\.s$"       . asm-mode)
+                ("\\.S$"       . asm-mode)
+                ("\\.asm$"     . asm-mode)
+
                 ("\\.java$"    . java-mode)
                 )))
+
+     (setq auto-mode-alist
+           (cons '("\\.po[tx]?\\'\\|\\.po\\." . po-mode) auto-mode-alist))
+     (autoload 'po-mode "po-mode")
 
 ;;; Some stuff I grabbed from BAM that should add neat things at the
 ;;; top of files you write with *emacs
@@ -676,6 +684,7 @@ l "\n")
                             ("\\.lex$"         . 'C-Header)
                             ("\\.y$"           . 'C-Header)
                             ("\\.cc$"          . 'C++-Header)
+                            ("\\.hh$"          . 'C++-Header)
                             ("\\.java$"        . 'Java-Header)
                             ("GNUmakefile$"    . 'Makefile-Header)
                             ("[Mm]akefile$"    . 'Makefile-Header)
@@ -687,7 +696,7 @@ l "\n")
                             ("\\.[1-9]$"       . 'Man-Header)
                             ("\\.sh$"          . 'Sh-Header)
                             ("\\.csh$"         . 'Csh-Header)
-                            ("\\.pl$"          . 'Perl-Header)
+                            ("\\.p[lm]$"          . 'Perl-Header)
                             ("\\.Notes$"       . 'Notes-Header)
                             ("\\.el$"          . 'Elisp-Header)
 			    ("\\.html$"	       . 'SGML-Header)
@@ -742,6 +751,7 @@ l "\n")
  '(ssl-view-certificate-program-name "openssl")
  '(toolbar-mail-commands-alist (quote ((not-configured . toolbar-not-configured) (vm . vm) (gnus . gnus-no-server) (rmail . rmail) (mh . mh-rmail) (pine toolbar-external "xterm" "-e" "pine") (elm toolbar-external "xterm" "-e" "elm") (mutt toolbar-external "rxvt" "-fn" "12x24" "-e" "mutt") (exmh toolbar-external "exmh") (netscape toolbar-external "netscape" "mailbox:") (send . mail))))
  '(gnuserv-program (concat exec-directory "/gnuserv"))
+ '(browse-url-browser-function (quote browse-url-lynx-emacs))
  '(c-default-style "stroustrup")
  '(toolbar-news-reader (quote gnus))
  '(toolbar-mail-reader (quote mutt))
