@@ -1,0 +1,70 @@
+# Tek's procmailrc
+#
+# $Id$
+#
+# Note: we should use m4 to generate this
+#
+
+PATH=$HOME/bin:/usr/bin:/bin:/usr/local/bin
+MAILDIR=$HOME/Mail	# You'd better make sure it exists
+DEFAULT=$MAILDIR/inbox
+LOGFILE=$MAILDIR/from
+LOCKFILE=$HOME/.lockmail
+
+# Cypherpunks-L
+:0 c				# Anything from Cypherpunks*-L
+* ^Sender: .*owner-cypherpunks@toad.com
+cypherpunks			# will go to $MAILDIR/cypherpunks
+# and then
+:0
+* ^Sender: .*owner-cypherpunks@toad.com
+!cp@unslider.lisc.org           # get forwarded to unS
+
+# stellalist
+:0				# Anything from Stellalist
+* ^Sender: .*owner-stella@biglist.com
+stellalist 			# will go to $MAILDIR/stellalist
+
+# penguin
+:0
+* ^Sender: .*owner-penguin@canuck.gen.nz
+penguin
+
+# Stegano-L
+:0
+* ^Sender: .*stegano.*@as-node.jena.thur.de
+stegano
+
+# GSL-fu
+:0
+* ^To: .*gsl-cvs.*
+gsl-cvs
+
+:0
+* ^Sender: .*gsl-announce.*
+gsl-announce
+
+:0
+* ^Sender: .*gsl-discuss.*
+gsl-discuss
+
+# bugtraq
+:0
+* ^Sender: .*bugtraq@securityfocus.*
+bugtraq
+
+# OOC support list
+:0
+* ^To: .*support@ooc.*
+* ^C[cC]: .*support@ooc.*
+support
+
+# Anything left, from me
+:0
+* ^From: .*tek@wiw.org.*
+tek				# will go to $MAILDIR/tek
+
+# Anything that has not been delivered by now will go to $DEFAULT
+# using LOCKFILE=$DEFAULT$LOCKEXT
+
+# EOF procmailrc
