@@ -1,6 +1,6 @@
 # Tek's procmailrc
 #
-# $Id: procmailrc,v 1.4 1999/08/06 13:13:47 tek Exp $
+# $Id: procmailrc,v 1.5 1999/08/08 01:47:49 tek Exp $
 #
 # Note: we should use m4 to generate this
 #
@@ -52,6 +52,11 @@ gsl-discuss
 :0
 * ^Sender: .*bugtraq@securityfocus.*
 bugtraq
+
+# OOC support list
+:0
+* .*staff@ooc.*
+staff
 
 # OOC support list
 :0

@@ -1,6 +1,6 @@
 # Tek's muttrc
 #
-# $Id: muttrc,v 1.3 1999/08/08 01:47:49 tek Exp $
+# $Id: muttrc,v 1.4 1999/08/17 11:29:37 tek Exp $
 #
 set folder=~/Mail
 set arrow_cursor
@@ -18,7 +18,7 @@ set pgp_verify_sig
 set pgp_autosign
 set pgp_replyencrypt
 set pgp_replysign
-set pgp_default_version=pgp5
+#set pgp_default_version=pgp5
 unignore *
 # emacslike keys
 bind pager \cv next-page
@@ -31,7 +31,7 @@ bind generic \e< first-entry
 bind generic \e> last-entry
 bind generic \cl current-middle
 # mailboxes
-mailboxes +inbox +support +cypherpunks +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob
+mailboxes +inbox +support +cypherpunks +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff
 my_hdr From: $EMAILADDRESS
 
 alias matthew Matthew Newhook <matthew@ooc.com>
