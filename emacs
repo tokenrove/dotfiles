@@ -2,6 +2,330 @@
 ;; Tek (tek@wiw.org)'s emacs setup
 ;;
 
+;; First, some nice stuff borrowed from Rik Faith
+
+(setq enable-local-variables  1)
+(setq gc-cons-threshold 1000000)
+
+;;; These version examination commands are from etc/sample.emacs in the
+;;; XEmacs 19.13 distribution.
+(defvar running-xemacs (string-match "XEmacs\\|Lucid" emacs-version))
+(if (not (boundp 'prefix-directory)) (defvar prefix-directory "/usr"))
+(if (and (not (boundp 'emacs-major-version))
+	 (string-match "^[0-9]+" emacs-version))
+    (setq emacs-major-version
+	  (string-to-int (substring emacs-version
+				    (match-beginning 0) (match-end 0)))))
+(if (and (not (boundp 'emacs-minor-version))
+	 (string-match "^[0-9]+\\.\\([0-9]+\\)" emacs-version))
+    (setq emacs-minor-version
+	  (string-to-int (substring emacs-version
+				    (match-beginning 1) (match-end 1)))))
+(defun running-emacs-version-or-newer (major minor)
+  (or (> emacs-major-version major)
+      (and (= emacs-major-version major)
+	   (>= emacs-minor-version minor))))
+
+(if (and (not running-xemacs) (and (eq window-system 'x) (x-display-color-p)))
+    (progn
+                                        ; Mouse selection stuff
+      (require 'mouse-sel)
+      (make-face 'new-mouse-highlight)
+      (set-face-background 'new-mouse-highlight "blue")
+      (overlay-put mouse-drag-overlay 'face 'new-mouse-highlight)
+      (setq mouse-sel-retain-highlight t)
+
+      (require 'faces)
+      (set-face-background 'highlight "red")
+      (set-face-foreground 'highlight "yellow")
+
+                                        ; Hilite stuff
+
+      (setq hilit-mode-enable-list  '(not text-mode)
+            hilit-background-mode   'dark
+            hilit-inhibit-hooks     nil
+            hilit-inhibit-rebinding nil)
+
+      (require 'hilit19)
+
+                                        ; used for C/C++ and elisp and perl
+
+      (hilit-translate comment      'moccasin
+                       include      'Plum1
+                       define       'Plum1
+                       defun        'cyan
+                       decl         'cyan
+                       type         'default
+                       keyword      'moccasin
+                       label        'moccasin
+                       string       'green3)
+
+                                        ; some further faces for Ada
+      (hilit-translate struct       'cyan
+                       glob-struct  'cyan
+                       named-param  'cyan)
+
+                                        ; and another one for LaTeX
+      (hilit-translate crossref     'Plum1)
+
+                                        ; Makefiles
+      (hilit-translate rule         'cyan)
+
+                                        ; Info
+      (hilit-translate jargon-entry 'green3
+                       jargon-xref  'cyan)
+      ))
+
+                                        ; Set up XEmacs stuff
+(if running-xemacs
+    (paren-set-mode 'paren)
+  (setq blink-matching-paren t))
+(if (and running-xemacs (and (eq window-system 'x) (x-display-color-p)))
+    (progn
+      ;; miscellaneous
+      (setq frame-icon-title-frame (concat "%S@" (system-name)))
+      (setq frame-icon-title-format (concat "%S@" (system-name)))
+      (setq frame-title-format (concat "%S@" (system-name)))
+      (define-key global-map [(control button1)] 'popup-buffer-menu)
+      (setq buffers-menu-max-size 60)
+      (if (running-emacs-version-or-newer 19 14)
+          (set-specifier default-toolbar-visible-p nil))
+
+      ;; text cursor
+      (setq default-frame-plist '(cursor-color "red"))
+;      (set-frame-width (selected-frame) 80)
+;      (set-frame-height (selected-frame) 43)
+
+      (setq initial-frame-plist default-frame-plist)
+      (setq bar-cursor nil)
+
+      ;; mouse cursor (the pointer)
+      (if (running-emacs-version-or-newer 19 14)
+          (set-face-foreground 'pointer "red"))
+
+      ;; fonts
+;      (set-face-font 'italic  "-misc-fixed-medium-r-normal-*-15-*")
+;      (set-face-font 'bold-italic "-misc-fixed-bold-r-normal-*-15-*")
+      (copy-face 'default 'italic)
+      (copy-face 'bold 'bold-italic)
+;      (set-face-font 'modeline "-*-lucidatypewriter-*-*-*-*-12-*")
+;      (set-face-font 'modeline-mousable-minor-mode "-*-lucidatypewriter-*-*-*-*-12-*")
+
+
+      ;; selections
+      (setq zmacs-regions t)
+
+      ;; colors of stuff
+      (setq x-pointer-foreground-color "red")
+      (setq x-pointer-background-color "black")
+
+      ;; font-lock mode
+      (setq font-lock-use-default-fonts nil)
+      (setq font-lock-use-default-colors nil)
+      (setq font-lock-use-maximal-decoration t)
+      (require 'font-lock)
+;      (set-face-font 'bold (face-font 'default))
+      (set-face-font 'bold-italic (face-font 'bold))
+      (copy-face 'default 'font-lock-comment-face)
+      (copy-face 'default 'font-lock-doc-string-face)
+      (copy-face 'default 'font-lock-function-name-face)
+      (copy-face 'default 'font-lock-preprocessor-face)
+      (copy-face 'default 'font-lock-keyword-face)
+      (copy-face 'default 'font-lock-type-face)
+      (copy-face 'default 'font-lock-string-face)
+      (copy-face 'default 'font-lock-variable-name-face)
+
+      (make-face 'font-lock-math-face)
+      (copy-face 'default 'font-lock-math-face)
+      (make-face 'font-lock-decl-face)
+      (copy-face 'default 'font-lock-decl-face)
+
+      (if (string-equal (color-name (face-foreground 'default)) "black")
+          (progn
+            (set-face-background 'zmacs-region "blue")
+            (set-face-foreground 'highlight "yellow")
+            (set-face-background 'highlight "red")
+            (set-face-background 'isearch "blue")
+            (set-face-background 'paren-match "blue")
+            (set-face-background 'paren-mismatch "orange")
+            (set-face-background 'secondary-selection "orange")
+
+            (set-face-foreground 'font-lock-comment-face "firebrick")
+            (set-face-foreground 'font-lock-string-face "darkgreen")
+            ;      (set-face-foreground 'font-lock-string-face "yellow")
+            (set-face-foreground 'font-lock-doc-string-face
+                                 (face-foreground 'font-lock-string-face))
+            (set-face-foreground 'font-lock-function-name-face "blue")
+            ;      (set-face-foreground 'font-lock-keyword-face "goldenrod")
+            (set-face-foreground 'font-lock-keyword-face "firebrick")
+            (set-face-foreground 'font-lock-preprocessor-face "darkgreen")
+            ;      (set-face-foreground 'font-lock-type-face "goldenrod")
+            (set-face-foreground 'font-lock-math-face "goldenrod")
+            (set-face-foreground 'font-lock-decl-face "blue"))
+        (progn
+          (set-face-background 'zmacs-region "blue")
+          (set-face-foreground 'highlight "yellow")
+          (set-face-background 'highlight "red")
+          (set-face-background 'isearch "blue")
+          (set-face-background 'paren-match "blue")
+          (set-face-background 'paren-mismatch "orange")
+          (set-face-background 'secondary-selection "orange")
+
+          (set-face-foreground 'font-lock-comment-face "moccasin")
+          (set-face-foreground 'font-lock-string-face "green3")
+          ;      (set-face-foreground 'font-lock-string-face "yellow")
+          (set-face-foreground 'font-lock-doc-string-face
+                               (face-foreground 'font-lock-string-face))
+          (set-face-foreground 'font-lock-function-name-face "cyan")
+          ;      (set-face-foreground 'font-lock-keyword-face "goldenrod")
+          (set-face-foreground 'font-lock-keyword-face "moccasin")
+          (set-face-foreground 'font-lock-preprocessor-face "Plum1")
+          ;      (set-face-foreground 'font-lock-type-face "goldenrod")
+          (set-face-foreground 'font-lock-math-face "goldenrod")
+          (set-face-foreground 'font-lock-decl-face "cyan"))
+        )
+
+      (setq sgml-font-lock-keywords
+            (purecopy
+             (list
+              '("\\(``[^']+''\\)" 1 font-lock-string-face t)
+              '("&[^;\n]*;" 0 font-lock-string-face t)
+;             '("\\(<[^>]*>\\)" 1 font-lock-preprocessor-face t)
+              '("\\(</[^>/]*[>/]\\)" 1 font-lock-preprocessor-face t)
+              '("\\(<[^>/]*/[^>/]*/\\)" 1 font-lock-preprocessor-face t)
+              '("\\(<[^>/]*[>/]\\)" 1 font-lock-preprocessor-face t)
+              '("\\(<![a-z]+\\>[^<>]*\\(<[^>]*>[^<>]*\\)*>\\)"
+                1 font-lock-comment-face t)
+              ;; Comments: <!-- ... -->. They traditionally override
+              ;; anything else.  It's complicated 'cause we won't allow
+              ;; "-->" inside a comment, and font-lock colours the
+              ;; *longest* possible match of the regexp.
+              '("\\(<!--\\([^-]\\|-[^-]\\|--[^>]\\)*-->\\)"
+                1 font-lock-comment-face t)
+              )))
+
+      ; This one from nroff-mode.el
+
+      (setq nroff-font-lock-keywords
+            (purecopy
+             (list
+              '("^[.']\\\\\".*" 0 font-lock-comment-face t)
+              '("[^\\\"]\\(\"[^\\\"]*\"\\)" 1 font-lock-string-face t)
+              ;; Directives are . or ' at start of line, followed by
+              ;; optional whitespace, then command (which my be longer than
+              ;; 2 characters in groff).  Perhaps the arguments should be
+              ;; fontified as well.
+              '( "^[.']\\s-*\\sw+.*" . font-lock-preprocessor-face)
+              ;; There are numerous groff escapes; the following get things
+              ;; like \-, \(em (standard troff) and \f[bar] (groff
+              ;; variants).  This won't currently do groff's \A'foo' and the
+              ;; like properly.  One might expect it to highlight an
+              ;; escape's arguments in common cases, like \f.
+                        (concat  "\\\\"                       ; backslash
+                         "\\(" ; followed by various possibilities
+                         (mapconcat 'identity
+                                    '("[f*n]*\\[.+]"    ; some groff extensions
+                                      "(.."             ; two chars after (
+                                      "[^(\"]"          ; single char escape
+                                      ) "\\|")
+                         "\\)"))
+              ))
+
+
+      (add-hook 'hyper-apropos-mode-hook
+               '(lambda ()
+                  (copy-face 'default 'hyperlink)
+                  (copy-face 'default 'warning)
+                  (copy-face 'bold 'major-heading)
+                  (copy-face 'bold 'section-heading)
+                  (if (string-equal (color-name
+                                     (face-foreground 'default)) "black")
+                      (progn
+                        (set-face-foreground 'hyperlink "blue")
+                        (set-face-foreground 'warning "red")
+                        (set-face-foreground 'documentation "darkgreen"))
+                    (progn
+                      (set-face-foreground 'hyperlink "Plum1")
+                      (set-face-foreground 'warning "red")
+                      (set-face-foreground 'documentation "green3")))))
+
+      (add-hook 'compilation-mode-hook
+                '(lambda ()
+                   (font-lock-mode 1)))
+
+      ))
+
+                                        ; C/C++ mode
+(fmakunbound 'c-mode)
+(makunbound 'c-mode-map)
+(fmakunbound 'c++-mode)
+(makunbound 'c++-mode-map)
+(makunbound 'c-style-alist)
+(autoload 'c++-mode  "cc-mode" "C++ Editing Mode" t)
+(autoload 'c-mode    "cc-mode" "C Editing Mode" t)
+(autoload 'objc-mode "cc-mode" "Objective-C Editing Mode" t)
+
+(defconst my-c-style
+    '("user"
+    (c-basic-offset                 . 4)
+    (c-block-comments-indent-p      . nil)
+    (c-tab-always-indent            . t)
+    (c-comment-only-line-offset     . 0)
+    (c-echo-syntactic-information-p . nil)
+    (c-electric-pound-behavior      . 'alignleft)
+    (c-recognize-knr-p              . nil)
+    (c-hanging-braces-alist         . ((substatement-open after)
+                                       (brace-list-open)))
+    (c-hanging-colons-alist         . ((member-init-intro before)
+                                       (inher-intro)
+                                       (case-label after)
+                                       (label after)
+                                       (access-label after)))
+    (c-cleanup-list                 . (brace-else-brace
+                                       list-close-comma
+                                       defun-close-semi
+                                       scope-operator))
+    (c-offsets-alist                . ((statement-block-intro . +)
+                                       (knr-argdecl-intro . +)
+                                       (substatement-open . 0)
+                                       (label . -)
+                                       (statement-cont . c-lineup-math)))
+    ))
+
+(setq c-default-style "user")
+(setq c-style-variables-are-local-p t)
+
+;; Customizations for both c-mode and c++-mode
+(defun my-c-mode-common-hook ()
+  ;; set up for my perferred indentation style, but  only do it once
+;  (or (assoc "faith" c-style-alist)
+;      (setq c-style-alist (cons my-c-style c-style-alist)))
+;  (c-set-style "faith")
+;  ;; other customizations
+;  (setq tab-width 8
+;        ;; this will make sure spaces are used instead of tabs
+;        indent-tabs-mode nil)
+  ;; we (might) like auto-newline and hungry-delete
+;  (c-toggle-auto-hungry-state -1)
+  ;; keybindings for C, C++, and Objective-C.  We can put these in
+  ;; c-mode-map because c++-mode-map and objc-mode-map inherit it
+  (define-key c-mode-map "\C-m" 'newline-and-indent)
+  )
+
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(setq c-backslash-column 75)
+
+
+(add-hook 'f90-mode-hook
+          (function (lambda ()
+                      (define-key f90-mode-map "\C-m" 'f90-indent-new-line)
+                      (define-key f90-mode-map "\M-\C-i" 'dabbrev-completion)
+                      (font-lock-mode 1)
+                      (abbrev-mode 1)
+                      )))
+
+
 ;; Quick hack to use alternate shell
 (setq explicit-shell-file-name "/bin/sh")
 ;;(setq c-default-style k&r)
@@ -133,7 +457,8 @@
           m "Created: " (current-time-string) " by " (Email-Address) "\n"
           m "Revised: " (current-time-string) " (pending)\n"
           m "Copyright " (Year) " " (Full-Name) " (" (Email-Address) ")\n"
-          m "This program comes with ABSOLUTELY NO WARRANTY.\n")
+          m "This program comes with ABSOLUTELY NO WARRANTY.\n"
+	  m "$Id$\n")
   (if (not (string-equal m l)) (insert m "\n"))
   (insert l "\n")
   (insert "\n" f "EOF " filename l)
@@ -260,6 +585,7 @@ m "\n")
   (Std-Header filename "#!/bin/csh -f\n# " "# " "#"))
 (defun Perl-Header (filename)
   (Std-Header filename "#!/usr/bin/perl\n# " "# " "#"))
+(defun SGML-Header (filename) (Std-Header filename "<!-- " " " "-->"))
 
 (defun TeX-Style-Header (filename)
   (insert "%\n"
@@ -356,6 +682,7 @@ l "\n")
                             ("\\.pl$"          . 'Perl-Header)
                             ("\\.Notes$"       . 'Notes-Header)
                             ("\\.el$"          . 'Elisp-Header)
+			    ("\\.html$"	       . 'SGML-Header)
                             ))
 
 ; I used Charlie Martin's autoinsert.el as a model for this. . .

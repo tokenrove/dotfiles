@@ -1,6 +1,6 @@
 # Tek's procmailrc
 #
-# $Id: procmailrc,v 1.3 1999/07/21 19:04:30 tek Exp $
+# $Id: procmailrc,v 1.4 1999/08/06 13:13:47 tek Exp $
 #
 # Note: we should use m4 to generate this
 #
@@ -67,6 +67,10 @@ ob
 :0
 * ^From: .*tek@wiw.org.*
 tek				# will go to $MAILDIR/tek
+
+:0
+* .*system check.*
+syschk
 
 # Anything that has not been delivered by now will go to $DEFAULT
 # using LOCKFILE=$DEFAULT$LOCKEXT

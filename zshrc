@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 #
-# $Id: zshrc,v 1.2 1999/07/21 15:42:09 tek Exp $
+# $Id: zshrc,v 1.3 1999/01/01 20:43:49 tek Exp $
 #
 
 NETHACKOPTIONS="!autopickup,IBMgraphics,lit_corridor,!null,\
@@ -15,9 +15,17 @@ PS3='%n@%m>> '
 PS4='%n@%m>>> '
 
 LS_OPTIONS=(-F --color=tty)
-EDITOR=emacs
-VISUAL=$EDITOR
 
+
+if [ -x /usr/bin/xemacs20 ]; then
+  alias emacs='xemacs20'
+  EDITOR='/usr/bin/xemacs20 -nw'
+else
+  alias emacs='emacs -nw'
+  EDITOR="emacs -nw"
+fi
+
+VISUAL=$EDITOR
 CVSEDITOR=$EDITOR
 CVSROOT="$HOME/cvs"
 CVS_RSH="ssh"
@@ -32,6 +40,7 @@ else
   EMAILADDRESS=js@ooc.com
 fi
 
+NNTPSERVER="news.thezone.net"
 FULLNAME="Julian E. C. Squires"
 MAIL="$HOME/Mail/inbox"
 
@@ -42,12 +51,6 @@ setopt AUTO_MENU NO_BEEP NO_BAD_PATTERN
 
 # Aliases
 alias ls='ls $LS_OPTIONS'
-
-if [ -x xemacs20 ]; then
-  alias emacs='xemacs20'
-else
-  alias emacs='emacs -nw'
-fi
 
 #alias x='startx -- -bpp 16'
 alias root='su -c bash'
