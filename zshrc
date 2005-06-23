@@ -89,5 +89,7 @@ ulimit -c unlimited
 alias l='xlock -mode ifs -erasemode venetian'
 alias tim="timidity -Os -a -p 256 -s 44100 -EFreverb=2"
 
+alias irssi="echo you don\'t really want to go on irc."
+
 # EOF zshrc
 alias atermsh="aterm -rv +sb -tr -sh 50 -fade 50"

@@ -39,6 +39,7 @@
 ;(color-theme-subtle-hacker)
 ;(color-theme-charcoal-black)
 (color-theme-dark-blue2)
+;(color-theme-feng-shui)
 
 ;; buffer switch with ^tab
 (require 'pc-bufsw)
