@@ -1,117 +1,16 @@
-# Tek's muttrc
-#
-# $Id: muttrc,v 1.6 2000/08/18 16:34:59 tek Exp $
-#
-set folder=~/Mail
-set arrow_cursor
-set copy=yes
-set editor=$EDITOR
-set hostname=distorted.wiw.org
-set nomark_old
-set mbox=+oldmail
-set postponed=+postponed
-set record=+sentmail
-set reply_to
-set reply_regexp="^([rR][Ee]:[ \t]*)+"
-set reverse_name
-set sort=threads
-#set pgp_default_version=pgp2
-set pgp_verify_sig
-set pgp_autosign
-set pgp_replyencrypt
-set pgp_replysign
-#set pgp_v2=/usr/bin/pgp
-unignore *
-# emacslike keys
-bind pager \cv next-page
-bind pager \ev previous-page
-bind pager \e< top
-bind pager \e> bottom
-bind generic \cv next-page
-bind generic \ev previous-page
-bind generic \e< first-entry
-bind generic \e> last-entry
-bind generic \cl current-middle
-# mailboxes
-mailboxes +inbox +rhombus +support +cypherpunks +coderpunks +lua +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff +linux-ipsec +linux-kernel +pen-test
-my_hdr From: tek@wiw.org
-# $EMAILADDRESS
+my_hdr From: julian@cipht.net
 
-alias matthew Matthew Newhook <matthew@ooc.com>
-alias dbarnes Daniel Barnes <dbarnes@www.wordplay.com>
-alias craig Craig Cook <craig@mediatouch.com>
-alias ayoung Andrew Young <ayoung@greenrock.com>
-alias penguin penguin@canuck.gen.nz
+set record="=sentmail"
 
-# EOF muttrc
-# -*-muttrc-*-
-#
-# Command formats for gpg.
-# 
-# This version uses gpg-2comp from 
-#   http://muppet.faveve.uni-stuttgart.de/~gero/gpg-2comp.tar.gz
-#
-# $Id: gpg.rc,v 1.7 2000/11/20 13:20:28 roessler Exp $
-#
-# %p    The empty string when no passphrase is needed,
-#       the string "PGPPASSFD=0" if one is needed.
-#
-#       This is mostly used in conditional % sequences.
-#
-# %f    Most PGP commands operate on a single file or a file
-#       containing a message.  %f expands to this file's name.
-#
-# %s    When verifying signatures, there is another temporary file
-#       containing the detached signature.  %s expands to this
-#       file's name.
-#
-# %a    In "signing" contexts, this expands to the value of the
-#       configuration variable $pgp_sign_as.  You probably need to
-#       use this within a conditional % sequence.
-#
-# %r    In many contexts, mutt passes key IDs to pgp.  %r expands to
-#       a list of key IDs.
+set crypt_autosign
 
-# decode application/pgp
-set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+subscribe sbcl-devel
+subscribe lilypond-
+subscribe cypherpunks
+subscribe plotter@yahoogroups
+subscribe tek-vg
+subscribe firewall-wizards
+subscribe stella@biglist.com
+subscribe CommodoreOne@yahoogroups
+subscribe uffi-devel
 
-# verify a pgp/mime signature
-set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
-
-# decrypt a pgp/mime attachment
-set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
-
-# create a pgp/mime signed attachment
-# set pgp_sign_command="gpg-2comp --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-
-# create a application/pgp signed (old-style) message
-# set pgp_clearsign_command="gpg-2comp --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-
-# create a pgp/mime encrypted attachment
-# set pgp_encrypt_only_command="pgpewrap gpg-2comp -v --batch --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
-set pgp_encrypt_only_command="pgpewrap gpg -v --batch --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
-
-# create a pgp/mime encrypted and signed attachment
-# set pgp_encrypt_sign_command="pgpewrap gpg-2comp --passphrase-fd 0 -v --batch --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
-set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 -v --batch --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
-
-# import a key into the public key ring
-set pgp_import_command="gpg --no-verbose --import -v %f"
-
-# export a key from the public key ring
-set pgp_export_command="gpg --no-verbose --export --armor %r"
-
-# verify a key
-set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-
-# read in the public key ring
-set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r" 
-
-# read in the secret key ring
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r" 
-
-# receive key from keyserver:
-#set pgp_getkeys_command="wrap.sh -g %r"
-set pgp_getkeys_command=""
