@@ -13,8 +13,8 @@ export PATH=$PATH:/usr/local/cm3/bin
 
 WATCH='all'
 HOSTNAME=`hostname -s || hostname`
-EMAILADDRESS=tek@wiw.org
-MAIL="$HOME/Mail/inbox"
+EMAILADDRESS=julian@cipht.net
+#MAIL="$HOME/Mail/inbox"
 
 case $HOSTNAME in
   distorted) 
@@ -64,6 +64,9 @@ setopt AUTO_MENU NO_BEEP NO_BAD_PATTERN EXTENDED_GLOB
 # I like emacs keys even though I use vi by default
 bindkey -e
 
+# completions.
+autoload -U compinit; compinit
+
 function dmalloc { eval `command dmalloc -b $*` }
 
 # Aliases
@@ -87,9 +90,12 @@ fi
 ulimit -c unlimited
 
 alias l='xlock -mode ifs -erasemode venetian'
-alias tim="timidity -Os -a -p 256 -s 44100 -EFreverb=2"
+alias tim="timidity -Os -a -p 256 -s 44100 -EFreverb=2 \
+           -L /usr/share/timidity/patches -c gravis.cfg"
 
 alias irssi="echo you don\'t really want to go on irc."
 
-# EOF zshrc
 alias atermsh="aterm -rv +sb -tr -sh 50 -fade 50"
+
+
+# EOF zshrc

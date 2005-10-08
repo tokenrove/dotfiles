@@ -7,8 +7,12 @@
 ;; Random important emacs customizations
 ;;
 
-(show-paren-mode)                       ; highlight parenthesis matches
-(global-font-lock-mode)                 ; always do syntax highlighting
+(if (featurep 'xemacs)			; highlight parenthesis matches
+    (paren-set-mode 'sexp)
+  (show-paren-mode))
+(if (featurep 'xemacs)			; always do syntax highlighting
+    (setq-default font-lock-auto-fontify t)
+  (global-font-lock-mode))
 (put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
 (column-number-mode t)                  ; show column numbers
 (auto-fill-mode)                        ; wrap lines and so on.

@@ -14,7 +14,8 @@ set wmnu
 set showmatch
 set visualbell
 "set guifont=-artwiz-runt-medium-r-normal-*-*-100-*-*-m-*-iso10646-1
-set guifont=Courier\ 11
+"set guifont=Courier\ 11
+set guifont=Monospace\ 10
 set guioptions=agi
 filetype indent on
 
