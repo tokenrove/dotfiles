@@ -1,3 +1,31 @@
+# Tek's muttrc
+#
+
+set folder=~/Mail
+set arrow_cursor
+set copy=yes
+set editor=$EDITOR
+set hostname=cipht.net
+set nomark_old
+set mbox=+oldmail
+set postponed=+postponed
+set record=+sentmail
+set reply_to
+set reply_regexp="^([rR][Ee]:[ \t]*)+"
+set reverse_name
+set sort=threads
+set sendmail="/usr/bin/msmtp"
+#set pgp_default_version=pgp2
+set pgp_verify_sig
+set pgp_autosign
+set pgp_replyencrypt
+set pgp_replysign
+#set pgp_v2=/usr/bin/pgp
+unignore *
+
+# mailboxes
+mailboxes +inbox +rhombus +fw-wizards +gbadev +support +cypherpunks +coderpunks +lua +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff +linux-ipsec +linux-kernel +pen-test +obsdtech
+
 my_hdr From: julian@cipht.net
 
 set record="=sentmail"
