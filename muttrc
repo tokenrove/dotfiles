@@ -24,7 +24,7 @@ set pgp_replysign
 unignore *
 
 # mailboxes
-mailboxes +inbox +rhombus +fw-wizards +gbadev +support +cypherpunks +coderpunks +lua +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff +linux-ipsec +linux-kernel +pen-test +obsdtech
+mailboxes +inbox +rhombus +fw-wizards +gbadev +support +cypherpunks +coderpunks +lua +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff +linux-ipsec +linux-kernel +pen-test +obsdtech +hatari-devel +linux-audio-user +vgdev
 
 my_hdr From: julian@cipht.net
 

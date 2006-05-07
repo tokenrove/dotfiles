@@ -36,7 +36,13 @@ case $HOSTNAME in
 	CVSROOT=/rhomb/cvs
 	MAIL=/var/mail/tek
 	;;
-  *) 
+  cyanosis)
+        export SBCL_HOME=~/sbcl/lib/sbcl
+        ;;
+  onion)
+	export JAVA_HOME=/usr/lib/j2sdk1.5-ibm/jre
+	;;
+  *)
         if [ -x `where xemacs` ]; then
           EMACS=`where xemacs`
 	elif [ -x `where zile` ]; then

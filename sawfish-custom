@@ -1,10 +1,11 @@
 ;; sawfish user customization -- do not edit by hand!
-;; sawfish version 1.3, written Sun Sep 25 12:54:42 2005
+;; sawfish version 1.3, written Sun Mar 19 07:53:44 2006
 
-(custom-set-keymap (quote window-keymap) (quote (keymap (resize-window-interactively . "A-M-r") (maximize-window-toggle . "A-M-m") (maximize-window-fullscreen-toggle . "M-F3") (move-window-interactively . "W-Button1-Move") (popup-window-menu . "W-Button2-Click") (raise-lower-window . "W-Button3-Click") (lower-window . "W-Down") (raise-window . "W-Up"))))
+(custom-set-typed-variable (quote default-frame-style) (quote Crux) (quote frame-style))
+(custom-set-keymap (quote global-keymap) (quote (keymap (cycle-windows . "M-TAB") (set-frame:unframed . "H-M-f") ((run-shell-command "xlock -erasemode venetian") . "A-M-C-x") (next-workspace . "W-Right") (previous-workspace . "W-Left"))))
+(custom-set-typed-variable (quote match-window-profile) (quote ((((WM_CLASS . "^Pterm/pterm$")) (maximized . all) (frame-type . none)) (((WM_CLASS . "^Emacs/emacs$")) (maximized . all) (frame-type . none)) (((WM_CLASS . "^Firefox-bin/firefox-bin$")) (maximized . all) (frame-type . none)))) (quote match-window) (quote sawfish.wm.ext.match-window))
+(custom-set-keymap (quote window-keymap) (quote (keymap (resize-window-interactively . "A-M-r") (move-window-interactively . "M-Button1-Click") (maximize-window-toggle . "A-M-m") (maximize-window-fullscreen-toggle . "M-F3") (move-window-interactively . "M-Button1-C-Move") (popup-window-menu . "M-Button2-C-Click") (lower-window . "W-Down") (raise-window . "W-Up"))))
 (custom-set-keymap (quote root-window-keymap) (quote (keymap (popup-root-menu . "Button2-Click") (popup-root-menu . "Button1-Click"))))
-(custom-set-typed-variable (quote default-frame-style) (quote tiny) (quote frame-style))
-(custom-set-keymap (quote global-keymap) (quote (keymap (cycle-windows . "W-TAB") ((run-shell-command "xlock -erasemode venetian") . "A-M-C-x") (next-workspace . "W-Right") (previous-workspace . "W-Left"))))
 (custom-set-typed-variable (quote workspace-names) (quote ("shell" "editor" "useless")) (quote (list string "Workspace names")))
 (custom-set-typed-variable (quote error-destination) (quote screen) (quote (choice nowhere screen standard-error)))
 (custom-set-typed-variable (quote default-font) (quote ("xlfd" . "fixed")) (quote font))

@@ -8,7 +8,7 @@
 SHELL=/bin/sh
 PATH=$HOME/bin:/usr/bin:/bin:/usr/local/bin
 MAILDIR=$HOME/Mail
-DEFAULT=$MAILDIR/inbox
+DEFAULT=$MAILDIR/inbox.spool
 LOGFILE=$MAILDIR/from
 LOCKFILE=$HOME/.lockmail
 
@@ -33,60 +33,123 @@ LOCKFILE=$HOME/.lockmail
 #            -i "Content-Type: application/pgp; format=text; x-action=sign"
 #}
 
+:0
+* !^Content-Type: message/
+* !^Content-Type: multipart/
+* !^Content-Type: application/pgp
+{
+    :0 fBw
+    * ^-----BEGIN PGP MESSAGE-----
+    * ^-----END PGP MESSAGE-----
+    | formail \
+        -i "Content-Type: application/pgp; format=text; x-action=encrypt"
+
+    :0 fBw
+    * ^-----BEGIN PGP SIGNED MESSAGE-----
+    * ^-----BEGIN PGP SIGNATURE-----
+    * ^-----END PGP SIGNATURE-----
+    | formail \
+        -i "Content-Type: application/pgp; format=text; x-action=sign"
+}
+
+# spam
+:0
+* ^TOlaserbear@cipht.net
+spam.spool
+
 # mailing lists
 :0
 * ^TOrhombus
-rhombus
+rhombus.spool
+
+:0
+* ^TOtek-vgdev
+vgdev.spool
+
+:0
+* ^TOsbcl-devel@lists.sourceforge.net
+sbcl.devel.spool
+
+:0
+* ^TOsbcl-devel@lists.sf.net
+sbcl.devel.spool
+
+:0
+* ^TOopenmcl-devel@clozure.com
+openmcl.devel.spool
 
 # Coderpunks-L
 :0
 * ^TOcoderpunks
-coderpunks
+coderpunks.spool
+
+:0
+* ^TOCommodoreOne@yahoogroups.com
+commodoreone.spool
 
 # openbsd-tech
 :0
-* ^TOtech
-obsdtech
+* ^TOtech@openbsd
+openbsd.tech.spool
 
 # cypherpunks-moderated
 :0
 * ^TOcypherpunks
-cypherpunks
+cypherpunks.spool
 
 # gbadev
 :0
 * ^TOgbadev
-gbadev
+gbadev.spool
+
+# celtix
+:0
+* ^TOceltix-dev
+celtix-dev.spool
+
+:0
+* ^From: <noreply@forge.objectweb.org>
+celtix-dev.spool
 
 # firewall-wizards
 :0
 * ^TOfirewall-wizards
-fw-wizards
+fw-wizards.spool
 
 # stellalist
 :0				# Anything from Stellalist
 * ^TOstella
-stellalist 			# will go to $MAILDIR/stellalist
+stellalist.spool 			# will go to $MAILDIR/stellalist
+
+# hatari-devel
+:0
+* ^TOhatari-devel
+hatari-devel.spool
+
+# l-a-u
+:0
+* ^TOlinux-audio-user
+linux-audio-user.spool
 
 # penguin
 :0
 * ^TOpenguin
-penguin
+penguin.spool
 
 # GSL-fu
 :0
 * ^TOgsl-announce
-gsl-announce
+gsl-announce.spool
 
 # Lua-L
 :0
 * ^TOlua-l
-lua
+lua.spool
 
 # bugtraq
 :0
 * ^TOBUGTRAQ
-bugtraq
+bugtraq.spool
 
 # Anything that has not been delivered by now will go to $DEFAULT
 # using LOCKFILE=$DEFAULT$LOCKEXT
