@@ -1,0 +1,4 @@
+defutf8 on
+startup_message off
+nethack on
+bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen urlview $HOME/.screen-urlview"
