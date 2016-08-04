@@ -24,7 +24,7 @@ maybe() { if $nope; then echo "$@"; else "$@"; fi; }
 ln_args=-sn
 if $force; then ln_args=-snf; fi
 
-for i in emacs.d gitconfig screenrc xsession zshrc xmonad mkshrc; do
+for i in emacs.d gitconfig gitignore screenrc xsession zshrc xmonad mkshrc; do
     maybe ln $ln_args "$src/$i" ~/.$i || echo "Warning: $i not emplaced"
 done
 

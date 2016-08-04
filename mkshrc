@@ -1,5 +1,6 @@
 export HOSTNAME="$(hostname)"
 
+# TODO: git prompt, only reading from .git/...
 PS4='[$EPOCHREALTIME] '
 PS1=$'\001\r''${|
 	\typeset e=$?

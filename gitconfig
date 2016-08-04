@@ -1,5 +1,12 @@
+[push]
+	default = nothing
+	recurseSubmodules = check
 [user]
 	name = Julian Squires
 	email = julian@cipht.net
-[push]
-	default = simple
+[core]
+	excludesfile = /home/julian/.gitignore
+[rebase]
+	autostash = true
+[pull]
+	rebase = true
