@@ -4,10 +4,28 @@
 
 set -eu
 
-src=$(dirname "$0")
+src=$(realpath $(dirname "$0"))
 
-for i in emacs.d gitconfig screenrc xsession zshrc xmonad; do
-    ln -s "$src/$i" ~/.$i
+usage() { echo "$0 [-nf]"; exit 1; }
+
+force=false
+nope=false
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+    -f) force=true; shift;;
+    -n) nope=true; shift;;
+    *) usage;;
+    esac
 done
 
-ln -s "$src/vendor/xcompose/dotXCompose" ~/.XCompose
+maybe() { if $nope; then echo "$@"; else "$@"; fi; }
+
+ln_args=-sn
+if $force; then ln_args=-snf; fi
+
+for i in emacs.d gitconfig screenrc xsession zshrc xmonad mkshrc; do
+    maybe ln $ln_args "$src/$i" ~/.$i || echo "Warning: $i not emplaced"
+done
+
+maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose
