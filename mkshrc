@@ -19,3 +19,6 @@ PS1=$'\001\r''${|
 export PS1 PS4
 
 if [ $TERM -eq st-256color ]; then export TERM=xterm; fi
+
+# OPAM configuration
+. /home/julian/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
