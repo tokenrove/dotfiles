@@ -7,7 +7,7 @@ cd ~/build
 
 # emacs 25
 {
-    sudo apt-get -y install libxpm-dev libgif-dev libgnutls-dev
+    if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls-dev; fi
     git clone git://git.savannah.gnu.org/emacs.git ~/build/emacs
     cd ~/build/emacs
     ./autogen.sh

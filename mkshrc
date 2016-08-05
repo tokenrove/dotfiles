@@ -17,3 +17,5 @@ PS1=$'\001\r''${|
 } '"$(if (( USER_ID )); then print \$; else print \#; fi) "
 
 export PS1 PS4
+
+if [ $TERM -eq st-256color ]; then export TERM=xterm; fi

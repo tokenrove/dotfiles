@@ -4,5 +4,6 @@ irssi
 mdnsd
 mksh
 ntp
+password-store
 screen
 sudo

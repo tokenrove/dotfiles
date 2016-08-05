@@ -8,6 +8,10 @@ if [ $HOSTNAME -eq temenos ]; then
     xrandr --output VGA1 --mode 1280x1024x60
 fi
 
+if [ `uname` -eq DragonFly ]; then
+    setxkbmap dvorak -option "ctrl:nocaps,compose:ralt"
+fi
+
 xrdb .Xdefaults
 
 #arbtt-capture &
