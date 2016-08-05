@@ -3,9 +3,9 @@
 set -eu
 
 mkdir -p ~/build ~/lib ~/bin
+cd ~/build
 
 # emacs 25
-echo installing emacs from git
 {
     sudo apt-get -y install libxpm-dev libgif-dev libgnutls-dev
     git clone git://git.savannah.gnu.org/emacs.git ~/build/emacs
@@ -17,7 +17,16 @@ echo installing emacs from git
     ln -s ~/lib/emacs/bin/* ~/bin
 }
 
-# sbcl
+# dwm
+{
+    curl -O http://dl.suckless.org/dwm/dwm-6.1.tar.gz
+    tar xzf dwm-6.1.tar.gz
+    cd dwm
+    cp ~/dotfiles/dwm/config.h .
+    make
+    make install PREFIX=$HOME/lib/dwm
+    ln -s ~/lib/dwm/bin/* ~/bin
+}
 
 # marelle
 {
