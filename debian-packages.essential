@@ -1,4 +1,5 @@
 build-essential
+curl
 devscripts
 etckeeper
 git

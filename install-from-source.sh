@@ -7,7 +7,7 @@ cd ~/build
 
 # emacs 25
 {
-    if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls-dev; fi
+    if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls28-dev texinfo libgtk2.0-dev; fi
     git clone git://git.savannah.gnu.org/emacs.git ~/build/emacs
     cd ~/build/emacs
     ./autogen.sh
@@ -19,9 +19,10 @@ cd ~/build
 
 # dwm
 {
+    if which apt-get; then sudo apt-get -y install libft-dev; fi
     curl -O http://dl.suckless.org/dwm/dwm-6.1.tar.gz
     tar xzf dwm-6.1.tar.gz
-    cd dwm
+    cd dwm-6.1
     cp ~/dotfiles/dwm/config.h .
     make
     make install PREFIX=$HOME/lib/dwm
@@ -40,6 +41,9 @@ EOF
 
 # opam
 {
+    opam init
     opam switch 4.03.0
     opam install merlin
 }
+
+# apl, jlang{

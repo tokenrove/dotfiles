@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+device=$1
+
+# we're supposed to read schemes here, but fuck it
+ifconfig $device up
+essids=$(iwlist $device scan | grep ESSID)
+
+while read essid scheme; do
+    if grep -q '"'"$essid"'"' <<<$essids; then echo $scheme; exit 0; fi
+done
+
+exit 1
