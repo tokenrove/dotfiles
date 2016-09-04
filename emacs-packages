@@ -27,7 +27,7 @@ gnu-apl-mode
 goose-theme
 haskell-mode
 highlight-escape-sequences
-highlight-parenthesis
+highlight-parentheses
 ido-completing-read+
 ido-ubiquitous
 j-mode
@@ -63,7 +63,6 @@ smex
 sml-mode
 snakehump
 ssh-file-modes
-tempbuf
 theme-changer
 tron-theme
 tronesque-theme

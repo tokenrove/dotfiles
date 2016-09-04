@@ -55,24 +55,10 @@
 ;;; was going to do.
 
 (defvar my-packages
-  '(magit
-    slime
-    org
-    paredit
-;;    pretty-symbols-mode
-    bbdb
-    tronesque-theme
-    mbo70s-theme
-    rainbow-delimiters
-    color-identifiers-mode
-    undo-tree
-    flycheck
-    tempbuf
-    powerline
-    ws-butler
-    diminish
-    elisp-slime-nav
-    ))
+  (mapcar #'read
+          (with-temp-buffer
+            (insert-file-contents "~/dotfiles/emacs-packages")
+            (split-string (buffer-string) "\n" t))))
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
@@ -94,10 +80,10 @@
 (put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
 (put 'downcase-region 'disabled nil)
 (column-number-mode t)                  ; show column numbers
-;;(set-fill-column 74)                    ; not quite standard.
+(set-fill-column 74)                    ; not quite standard.
 (delete-selection-mode -1)
 (setq backup-by-copying-when-linked t	; don't fuck over hardlinked files.
-      backup-by-copying-when-mismatch)	; careful with ownership
+      backup-by-copying-when-mismatch t) ; careful with ownership
 (mouse-avoidance-mode 'banish)          ; get the rodent out of my way.
 (set-language-environment "UTF-8")	; anything ken invented must be good.
 (prefer-coding-system 'utf-8)           ;   ditto.
@@ -646,7 +632,7 @@
 
 ;;;; DIMINISH
 
-(require 'diminish)
-(diminish 'auto-complete-mode)
-(diminish 'color-identifiers-mode)
-(diminish 'undo-tree-mode)
+(require 'delight)
+(delight 'auto-complete-mode)
+(delight 'color-identifiers-mode)
+(delight 'undo-tree-mode)
