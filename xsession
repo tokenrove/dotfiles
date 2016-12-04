@@ -21,7 +21,7 @@ xrdb .Xdefaults
 redshift -l 45.5:-73.56 &
 
 ## -grab for xmonad
-unclutter -grab &
+unclutter -grab -keystroke &
 
 #xautolock -locker ~/src/mood-tracker/interrogator.tcl -time 10 &
 
