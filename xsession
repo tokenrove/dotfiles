@@ -12,6 +12,8 @@ if [ `uname` = DragonFly ]; then
     setxkbmap dvorak -option "ctrl:nocaps,compose:ralt"
 fi
 
+xinput set-prop 'SynPS/2 Synaptics TouchPad' 'Device Enabled' 0
+
 xrdb .Xdefaults
 
 #arbtt-capture &
