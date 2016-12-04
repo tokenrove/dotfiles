@@ -28,6 +28,11 @@ unclutter -grab -keystroke &
 ## ibus interacts badly with compose key in emacs or something
 XMODIFIERS=@im=none emacs &
 
+export GTK_IM_MODULE='uim'
+export QT_IM_MODULE='uim'
+uim-xim &
+export XMODIFIERS='@im=uim'
+
 if which stterm; then
     stterm -f Inconsolata-22 &
 else
