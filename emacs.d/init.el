@@ -68,6 +68,8 @@
 ;;(set-default-font "-xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1")
 ;; (set-frame-font "Inconsolata 14")       ; done in .Xdefaults now
 
+(set-default-font "Inconsolata 18")
+
 ;; (require 'auto-compile)
 ;; (auto-compile-on-save-mode)
 
