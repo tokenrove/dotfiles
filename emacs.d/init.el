@@ -358,6 +358,16 @@
 
 (global-set-key (kbd "<f9>") 'recompile)
 
+(use-package ponylang-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook
+     'ponylang-mode-hook
+     (lambda ()
+       (set-variable 'indent-tabs-mode nil)
+       (set-variable 'tab-width 2)))))
+
 ;; handle colored output in compilation mode
 (ignore-errors
   (require 'ansi-color)
