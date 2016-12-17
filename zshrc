@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+unset HISTFILE
+HISTSIZE=10000
+SAVEHIST=0
 unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -12,25 +12,24 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-VISUAL=emacsclient
-export VISUAL
-
 autoload -Uz vcs_info
 
 zstyle ':vcs_info:*' formats '[%b%c%u]'
 precmd () { vcs_info }
-#PS1='%B%F{black}%! %n@%m:%3~ %U${vcs_info_msg_0_}%u%#%f%b '
-PS1='%B%F{black}%! %n@%m:%3~ %f%b%F{cyan}${vcs_info_msg_0_}%f%F{yellow}%#%f '
-#PS1='%! %n@%m:%3~ %U${vcs_info_msg_0_}%u%# '
+PS1='%B%(?..%F{red}%?%f )%F{black}%n@%m:%3~ %f%b%F{cyan}${vcs_info_msg_0_}%f%F{yellow}%#%f '
 zstyle ':vcs_info:*' enable git
 setopt promptsubst
 
 alias ls="ls -F"
 
-# OPAM configuration
-. /home/julian/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
+# Note http://www.zsh.org/mla/users/2003/msg00600.html
 export PATH=$PATH:~/bin
 
-export ANDROID_HOME=~/android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools
+# interactive shell path additions can follow:
+
+if [ -d ~/lib/android-sdk-linux/tools ]; then
+    export PATH=$PATH:~/lib/android-sdk-linux/tools
+fi
+
+# OPAM configuration
+. /home/julian/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

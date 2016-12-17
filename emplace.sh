@@ -30,7 +30,7 @@ for i in \
         mkshrc muttrc \
         screenrc signature \
         Xdefaults xsession xmonad \
-        zshrc
+        zshenv zshrc
 do
     maybe ln $ln_args "$src/$i" ~/.$i || echo "Warning: $i not emplaced"
 done
