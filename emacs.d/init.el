@@ -468,14 +468,7 @@
 (setq auto-mode-alist (cons '("\\.hx" . haxe-mode) auto-mode-alist))
 
 ;;; J stuff
-(autoload 'j-mode "j-mode.el"  "Major mode for J." t)
-(autoload 'j-shell "j-mode.el" "Run J from emacs." t)
-(setq auto-mode-alist (cons '("\\.ij[rstp]" . j-mode) auto-mode-alist))
-(eval-after-load "j-mode"
-  '(setq j-path "/home/julian/lib/j64-701"
-	j-command "/home/julian/lib/j64-701/bin/jconsole"
-	;;      j-command-args nli
-	j-dictionary-url "file:///home/julian/lib/j64-701/addons/help"))
+(js/try-require 'j-mode)
 
 ;;; golang
 
