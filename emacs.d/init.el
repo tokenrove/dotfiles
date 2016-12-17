@@ -34,9 +34,6 @@
 (add-to-list 'load-path "~/src/elisp/")
 (add-to-list 'load-path "/usr/local/lilypond/usr/share/emacs/site-lisp/")
 
-(eval-after-load "gnus"
-  '(setq gnus-init-file "~/.emacs.d/gnus.el"))
-
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -579,10 +576,6 @@
 (defadvice magit-mode-quit-window (around magit-restore-screen activate)
   ad-do-it
   (jump-to-register :magit-fullscreen))
-
-;;;; EMAIL / NEWS
-
-(load-file "~/.emacs.d/init-mail.el")
 
 ;;;; RANDOM PACKAGES
 (autoload 'typing-of-emacs "typing" "The Typing Of Emacs, a game." t)
