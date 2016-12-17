@@ -16,9 +16,6 @@
 (require 'tramp)
 (defvar hostname (intern tramp-default-host))
 
-(when (featurep 'aquamacs)
-  (load "init-aquamacs.el"))
-
 ;;; totally stolen from http://www.mygooglest.com/fni/dot-emacs.html
 ;;; although perhaps all I really need is (require 'foo nil t)
 (defvar missing-packages-list nil
