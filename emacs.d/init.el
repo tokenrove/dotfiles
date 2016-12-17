@@ -623,11 +623,6 @@
 
 (server-start)
 
-;;; mpd / emms
-
-;;(load-file "~/.emacs.d/init-emms.el")
-
-
 ;;;; DIMINISH
 
 (require 'delight)
