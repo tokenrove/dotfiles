@@ -1,1 +1,0 @@
-48e10dbe4be825c2d66ddd2187eed2c1  zshrc
