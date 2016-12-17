@@ -1,4 +1,8 @@
 defutf8 on
 startup_message off
 nethack on
+hardstatus ignore
+vbell off
+defscrollback 50000
+
 bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen urlview $HOME/.screen-urlview"

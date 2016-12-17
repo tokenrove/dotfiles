@@ -18,6 +18,8 @@ xrdb .Xdefaults
 
 #arbtt-capture &
 
+xwrits &
+
 redshift -l 45.5:-73.56 &
 
 ## -grab for xmonad
