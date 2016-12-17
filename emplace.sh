@@ -27,7 +27,7 @@ if $force; then ln_args=-snf; fi
 for i in \
         emacs.d \
         gitconfig gitignore \
-        mkshrc \
+        mkshrc muttrc \
         screenrc signature \
         Xdefaults xsession xmonad \
         zshrc

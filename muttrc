@@ -1,44 +1,25 @@
-# Tek's muttrc
-#
 
-set folder=~/Mail
-set arrow_cursor
-set copy=yes
-set editor=$EDITOR
-set hostname=cipht.net
-set nomark_old
-set mbox=+oldmail
-set postponed=+postponed
-set record=+sentmail
-set reply_to
-set reply_regexp="^([rR][Ee]:[ \t]*)+"
-set reverse_name
-set sort=threads
-set sendmail="/usr/bin/msmtp"
-#set pgp_default_version=pgp2
-set pgp_verify_sig
-set pgp_autosign
-set pgp_replyencrypt
-set pgp_replysign
-#set pgp_v2=/usr/bin/pgp
-unignore *
+set folder = "imaps://imap.gmail.com/"
+set spoolfile = "+INBOX"
+set postponed = "+[Gmail]/Drafts"
+set sort = threads
 
-# mailboxes
-mailboxes +inbox +rhombus +fw-wizards +gbadev +support +cypherpunks +coderpunks +lua +bugtraq +penguin +stellalist +stegano +gsl-discuss +gsl-announce +gsl-cvs +ob +staff +linux-ipsec +linux-kernel +pen-test +obsdtech +hatari-devel +linux-audio-user +vgdev
+set header_cache = "~/.cache/mutt"
+set message_cachedir = "~/.cache/mutt"
 
-my_hdr From: julian@cipht.net
+source ~/.mutt/authinfo
 
-set record="=sentmail"
+set imap_user = "julian.squires@gmail.com"
+set smtp_url = "smtps://julian.squires@smtp.gmail.com"
+# If smtp_url isn't google, you should set record = "+[Gmail]/Sent Mail"
+unset record
+set from = "julian@cipht.net"
+set use_from = yes
 
-set crypt_autosign
+set mbox="imaps://imap.gmail.com/[Gmail]/All Mail"
 
-subscribe sbcl-devel
-subscribe lilypond-
-subscribe cypherpunks
-subscribe plotter@yahoogroups
-subscribe tek-vg
-subscribe firewall-wizards
-subscribe stella@biglist.com
-subscribe CommodoreOne@yahoogroups
-subscribe uffi-devel
+#macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
 
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+source ~/.mutt/gpg.rc
