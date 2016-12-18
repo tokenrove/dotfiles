@@ -44,7 +44,7 @@
 ;;(load-theme 'tronesque t)
 ;; (load-theme 'mbo70s t)
 (load-theme 'sanityinc-tomorrow-day t)
-;; (let ((fav-light-themes (sanityinc-tomorrow-day sanityinc-solarized-light))
+;; (let ((fav-light-themes (sanityinc-tomorrow-day sanityinc-solarized-light organic-green-theme))
 ;;       (fav-dark-themes (mbo70s sanityinc-tomorrow-eighties tronesque))))
 
 
@@ -84,39 +84,70 @@
 (show-paren-mode t)                     ; highlight parenthesis matches.
 (setq-default font-lock-auto-fontify t) ; always do syntax highlighting.
 (global-font-lock-mode t)               ;   really.
-(setq-default show-trailing-whitespace t)
-(setq font-lock-verbose nil
-      default-major-mode 'text-mode     ; If you don't know, just give me text-mode
-      comment-style 'extra-line)        ; nice comment format
+(setq-default show-trailing-whitespace t
+              comment-style 'extra-line ; nice comment format
+              indent-tabs-mode nil)
+(setq make-backup-files nil            ; herecy, I know.
+      compilation-scroll-output 'first-error)
 (put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
 (put 'downcase-region 'disabled nil)
 (set-fill-column 74)                    ; not quite standard.
 (delete-selection-mode -1)
 (set-language-environment "UTF-8")      ; anything ken invented must be good.
 (prefer-coding-system 'utf-8)           ;   ditto.
-(setq-default indent-tabs-mode nil)     ; tabs suck.
-(setq make-backup-files nil)             ; herecy, I know.
 
-;;; XXX I should disable this on Windows where it makes things really
-;;; slow.
-(global-auto-revert-mode 1)
-(setq global-auto-revert-non-file-buffers t
-      auto-revert-verbose nil)
+(unless (eql system-type 'windows-nt)
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t
+        auto-revert-verbose nil))
 
 (random t)                              ; Do random numbers
+
+(auto-compression-mode 1)   ; transparently work with compressed files
+
+(setq-default
+ tab-always-indent 'complete
+ dabbrev-case-replace t                ; match case with M-/
+ font-lock-maximum-decoration t
+ even-window-heights nil               ; I don't like emacs destroying my window setup
+ resize-mini-windows nil
+ cursor-in-non-selected-windows nil    ; Don't show a cursor in other windows
+ display-time-24hr-format t            ; No am/pm here
+ default-tab-width 8                   ; A tab is 8 spaces is 8 spaces is 8 spaces
+ scroll-preserve-screen-position 'keep ; Scrolling is moving the document, not moving my eyes
+ inhibit-startup-message t             ; we know where we are.
+ x-stretch-cursor t                    ; A wide characters ask for a wide cursor
+ x-select-enable-clipboard t
+ select-enable-clipboard t
+ x-select-enable-primary t
+ select-enable-primary t
+ save-interprogram-paste-before-kill t
+ apropos-do-all t
+ mouse-yank-at-point t ; I want a mouse yank to be inserted where the point is, not where i click
+ mouse-highlight 1 ; Don't highlight stuff that I can click on all the time. I don't click anyways.
+ visible-bell t)                       ; Beeps suck
+(blink-cursor-mode -1)                  ; less wakeups: save power.
+(mouse-avoidance-mode 'banish)          ; get the rodent out of my way.
+(setq ring-bell-function 'ignore)       ; stop triggering curtis
+
+;;;; PACKAGES
 
 (use-package ido
   :config
   (setq ido-use-filename-at-point 'guess
-        ido-enable-flex-matching t)
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always)
   (ido-mode 1)
   (ido-everywhere 1))
 (use-package flx-ido :config (flx-ido-mode t))
 (use-package ido-ubiquitous :config (ido-ubiquitous-mode 1))
-(use-package smex)
+(use-package smex
+  :bind (([remap execute-extended-command] . smex)
+         ("M-x" . smex)))
 (use-package idomenu)
 
-(setq reb-re-syntax 'string)            ; regexp-builder
+(use-package re-builder
+  :config (setq reb-re-syntax 'string))
 
 (use-package color-identifiers-mode
   :config
@@ -128,13 +159,6 @@
 
 (use-package ws-butler
   :config (ws-butler-global-mode t))
-
-(defun text-mode-nicities ()
-  (auto-fill-mode)			; wrap lines and so on.
-  ;;(footnote-mode)			; see [1] and so on.
-  )
-(add-hook 'text-mode-hook 'text-mode-nicities)
-(add-hook 'message-mode-hook 'text-mode-nicities)
 
 (eval-after-load 'dired '(load-file "~/.emacs.d/init-dired.el"))
 
@@ -162,34 +186,16 @@
     try-complete-lisp-symbol-partially
     try-complete-lisp-symbol))
 
-;; (use-package rainbow-delimiters
-;;   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+(use-package rainbow-delimiters
+  :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-(auto-compression-mode 1)   ; transparently work with compressed files
+(use-package ag)
 
-(setq-default
- tab-always-indent 'complete
- dabbrev-case-replace t                ; match case with M-/
- font-lock-maximum-decoration t
- even-window-heights nil               ; I don't like emacs destroying my window setup
- resize-mini-windows nil
- cursor-in-non-selected-windows nil    ; Don't show a cursor in other windows
- display-time-24hr-format t            ; No am/pm here
- default-tab-width 8                   ; A tab is 8 spaces is 8 spaces is 8 spaces
- scroll-preserve-screen-position 'keep ; Scrolling is moving the document, not moving my eyes
- inhibit-startup-message t             ; we know where we are.
- x-stretch-cursor t                    ; A wide characters ask for a wide cursor
- x-select-enable-clipboard t
- select-enable-clipboard t
- x-select-enable-primary t
- select-enable-primary t
- save-interprogram-paste-before-kill t
- apropos-do-all t
- mouse-yank-at-point t ; I want a mouse yank to be inserted where the point is, not where i click
- mouse-highlight 1 ; Don't highlight stuff that I can click on all the time. I don't click anyways.
- visible-bell t)                       ; Beeps suck
-(blink-cursor-mode -1)                  ; less wakeups: save power.
-(mouse-avoidance-mode 'banish)          ; get the rodent out of my way.
+(use-package bury-successful-compilation
+  :config (bury-successful-compilation-turn-on))
+
+(use-package dictionary
+  :commands (dictionary dictionary-search))
 
 (use-package whitespace
   :config
@@ -215,7 +221,6 @@
  ("C-x \\"   . align-regexp))
 
 (bind-keys*                    ; * => don't let anyone override these.
- ("M-x" . smex)
  ;; Dvorak bindings.
  ("C-." . smex)
  ("C-," . Control-X-prefix)
@@ -272,10 +277,12 @@
   (add-hook 'prog-mode-hook #'semantic-mode))
 
 (use-package paredit
-  :bind (:lisp-interaction-mode-map ("S-return" . eval-print-last-sexp))
   :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook #'enable-paredit-mode))
+
+(bind-key* "C-j" #'eval-print-last-sexp
+           :lisp-interaction-mode-map)
 
 (use-package flycheck
   :config
@@ -286,7 +293,16 @@
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-color-mode-line-mode))
 
-(setq compilation-scroll-output 'first-error)
+(use-package flycheck-checkbashisms)
+(use-package flycheck-cstyle)
+(use-package flycheck-tcl)
+
+(use-package company
+  :ensure t
+  :config
+  (define-key company-mode-map [remap hippie-expand] 'company-complete)
+  (define-key company-active-map [remap hippie-expand] 'company-complete)
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 (add-to-list 'load-path "~/src/elisp/")
@@ -345,16 +361,6 @@
 (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
 (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
 
-(require 'ocp-indent)
-(require 'merlin)
-;; Start merlin on ocaml files
-(add-hook 'tuareg-mode-hook 'merlin-mode t)
-(add-hook 'caml-mode-hook 'merlin-mode t)
-;; Enable auto-complete
-(setq merlin-use-auto-complete-mode 'easy)
-;; Use opam switch to lookup ocamlmerlin binary
-(setq merlin-command 'opam)
-
 ;; Setup environment variables using opam
 (dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
   (setenv (car var) (cadr var)))
@@ -370,6 +376,17 @@
 ;; Automatically load utop.el
 (autoload 'utop "utop" "Toplevel for OCaml" t)
 (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+
+(use-package ocp-indent)
+(use-package merlin
+  :config
+  ;; Start merlin on ocaml files
+  (add-hook 'tuareg-mode-hook 'merlin-mode t)
+  (add-hook 'caml-mode-hook 'merlin-mode t)
+  ;; Enable auto-complete
+  (setq merlin-use-auto-complete-mode 'easy)
+  ;; Use opam switch to lookup ocamlmerlin binary
+  (setq merlin-command 'opam))
 
 ;; (use-package python-pylint)
 ;; (use-package python-pep8)
