@@ -6,6 +6,7 @@
 (require 'org-habit)
 (require 'org-capture)
 (require 'org-crypt)
+(use-package ox-html5slide)
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)

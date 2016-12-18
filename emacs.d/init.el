@@ -33,7 +33,7 @@
 ;;;; LOOK & FEEL
 
 ;; also set in Xdefaults, but it never hurts to be sure.
-(set-default-font "Inconsolata 18")
+(set-frame-font "Inconsolata 18")
 
 ;; kill the damn tool/menu/scrollbars.
 (tool-bar-mode -1)
@@ -45,8 +45,8 @@
   :config
   (load-theme 'sanityinc-tomorrow-day t t)
   (load-theme 'sanityinc-tomorrow-eighties t t))
-(use-package tronesque-theme :config (load-theme 'tronesque t t))
 (use-package mbo70s-theme :config (load-theme 'mbo70s t t))
+;; other good themes, omitted here: tronesque, tron, cyberpunk, organic-green, goose
 
 (require 'solar)
 
@@ -124,7 +124,15 @@
 (prefer-coding-system 'utf-8)           ;   ditto.
 
 (use-package compile
-  :config (setq compilation-scroll-output 'first-error))
+  :config
+  (setq compilation-scroll-output 'first-error)
+  ;; handle colored output in compilation mode
+  (use-package ansi-color
+    :config
+    (add-hook 'compilation-filter-hook
+              (lambda ()
+                (when (eq major-mode 'compilation-mode)
+                  (ansi-color-apply-on-region compilation-filter-start (point-max)))))))
 
 (unless (eql system-type 'windows-nt)
   (use-package autorevert
@@ -147,12 +155,12 @@
 
 ;;;; PACKAGES
 
+(defun js--save-and-leave-emacsclient () (interactive)
+  (save-buffer) (server-edit))
 (use-package sendmail
   :mode "/mutt-.*"
-  :bind (:mail-mode-map ("C-c C-c" . (lambda () (interactive)
-                                       (save-buffer) (server-edit))))
-  :config
-  (add-hook 'mail-mode-hook #'turn-on-auto-fill))
+  :bind (:map mail-mode-map ("C-c C-c" . js--save-and-leave-emacsclient))
+  :config (add-hook 'mail-mode-hook #'turn-on-auto-fill))
 
 (use-package ido
   :config
@@ -182,9 +190,18 @@
 (use-package ws-butler
   :config (ws-butler-global-mode t))
 
-(eval-after-load 'dired '(load-file "~/.emacs.d/init-dired.el"))
-
-(use-package midnight)
+(require 'dired-x)
+(use-package dired-rainbow)
+(defun dired-back-to-top () (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 4))
+(defun dired-jump-to-bottom () (interactive)
+  (end-of-buffer)
+  (dired-next-line -1))
+(bind-keys
+ :map dired-mode-map
+ ([remap beginning-of-buffer] . dired-back-to-top)
+ ([remap end-of-buffer] . dired-jump-to-bottom))
 
 (use-package undo-tree
   :config
@@ -226,6 +243,82 @@
    whitespace-line-column 80)
   (global-whitespace-mode t))
 
+(use-package magit
+  :bind (("\C-ci" . magit-status))
+  :config
+  (setq magit-save-repository-buffers nil
+        magit-completing-read-function 'magit-ido-completing-read)
+  (defadvice magit-status (around magit-fullscreen activate)
+    "full screen magit-status"
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
+  (defadvice magit-mode-quit-window (around magit-restore-screen activate)
+    ad-do-it
+    (jump-to-register :magit-fullscreen)))
+
+(autoload 'typing-of-emacs "typing" "The Typing Of Emacs, a game." t)
+
+(use-package midnight)
+
+(require 'tempbuf)
+(dolist (m '("dired" "custom" "Man" "view"))
+  (add-hook (intern (concat m "-mode-hook"))
+            #'turn-on-tempbuf-mode))
+
+(use-package org
+  :config
+  (eval-after-load 'org '(load-file "~/.emacs.d/init-org.el")))
+
+(defvar libnotify-program "/usr/bin/notify-send")
+(defun notify-send (title message)
+  (start-process "notify" " notify"
+                 libnotify-program "--expire-time=4000" title message))
+
+(autoload 'griffin "griffin" "Compile static blog" t)
+
+(use-package company
+  :ensure t
+  :config
+  (define-key company-mode-map [remap hippie-expand] 'company-complete)
+  (define-key company-active-map [remap hippie-expand] 'company-complete)
+  (global-company-mode 1)
+  (use-package company-c-headers
+    :config (add-to-list 'company-backends 'company-c-headers))
+  (use-package company-quickhelp :config (company-quickhelp-mode 1))
+  (use-package company-statistics :config (company-statistics-mode 1)))
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode 1)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+
+  (use-package flycheck-color-mode-line
+    :config
+    (add-hook 'flycheck-mode-hook #'flycheck-color-mode-line-mode))
+
+  (use-package flycheck-checkbashisms)
+  (use-package flycheck-cstyle)
+  (use-package flycheck-pony)
+  (use-package flycheck-rebar3 :config (flycheck-rebar3-setup))
+  (use-package flycheck-tcl))
+
+(use-package logview)
+(use-package niceify-info
+  :config (add-hook 'Info-selection-hook #'niceify-info))
+(use-package ninja-mode)
+(use-package mingus)
+(use-package modern-cpp-font-lock)
+
+(use-package writegood-mode
+  :config
+  (add-hook 'text-mode #'writegood-turn-on))
+
+(use-package snakehump)
+(use-package ssh-file-modes)
+(use-package unbound)
+(use-package volume)
+(use-package verify-url)
 
 ;;;; KEY BINDINGS
 
@@ -258,38 +351,6 @@
 
 ;;;; PROGRAMMING LANGUAGES
 
-(use-package slime
-  :config
-  (slime-setup '(slime-fancy slime-asdf slime-banner slime-autodoc
-                 slime-editing-commands slime-references slime-indentation))
-  (setq slime-complete-symbol*-fancy t
-        slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-        slime-repl-history-remove-duplicates t
-        slime-repl-history-trim-whitespace t
-        slime-lisp-implementations
-        `((sbcl ("sbcl") :coding-system utf-8-unix)
-          (ccl ("ccl") :coding-system utf-8-unix)
-          (clisp ("clisp"))
-          (ecl ("ecl")))
-        slime-net-coding-system 'utf-8-unix
-        slime-default-lisp 'sbcl))
-
-(use-package ponylang-mode
-  :config
-  (add-hook
-   'ponylang-mode-hook
-   (lambda ()
-     (set-variable 'indent-tabs-mode nil)
-     (set-variable 'tab-width 2))))
-
-;; handle colored output in compilation mode
-(use-package ansi-color
-  :config
-  (add-hook 'compilation-filter-hook
-            (lambda ()
-              (when (eq major-mode 'compilation-mode)
-                (ansi-color-apply-on-region compilation-filter-start (point-max))))))
-
 (use-package semantic
   :config
   (global-semanticdb-minor-mode 1)
@@ -304,33 +365,51 @@
 (bind-key* "C-j" #'eval-print-last-sexp
            :lisp-interaction-mode-map)
 
-(use-package flycheck
+(use-package slime
   :config
-  (global-flycheck-mode 1)
-  (setq flycheck-check-syntax-automatically '(mode-enabled save)))
+  (use-package slime-company)
+  (slime-setup '(slime-fancy slime-asdf slime-banner slime-autodoc
+                             slime-editing-commands slime-references slime-indentation
+                             slime-company))
+  (setq slime-complete-symbol*-fancy t
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+        slime-repl-history-remove-duplicates t
+        slime-repl-history-trim-whitespace t
+        slime-lisp-implementations
+        `((sbcl ("sbcl") :coding-system utf-8-unix)
+          (ccl ("ccl") :coding-system utf-8-unix)
+          (clisp ("clisp"))
+          (ecl ("ecl")))
+        slime-net-coding-system 'utf-8-unix
+        slime-default-lisp 'sbcl))
 
-(use-package flycheck-color-mode-line
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-color-mode-line-mode))
+(use-package geiser)
 
-(use-package flycheck-checkbashisms)
-(use-package flycheck-cstyle)
-(use-package flycheck-tcl)
-
-(use-package company
-  :ensure t
-  :config
-  (define-key company-mode-map [remap hippie-expand] 'company-complete)
-  (define-key company-active-map [remap hippie-expand] 'company-complete)
-  (add-hook 'after-init-hook 'global-company-mode))
+(use-package elisp-slime-nav
+  :config (add-hook 'emacs-lisp-mode-hook #'elisp-slime-nav-mode))
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 (add-to-list 'load-path "~/src/elisp/")
 
 (use-package cc-mode
   :config
-  (global-cwarn-mode t)
-  (load-file "~/.emacs.d/init-c.el")
+  (use-package cwarn
+    :config (global-cwarn-mode t))
+  (use-package c-eldoc
+    :config (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
+
+  (require 'cc-mode-append-include nil nil)
+
+  (require 'eassist)
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (bind-keys :map c-mode-base-map
+                         ;; XXX should consider C-c C-a instead of M-o to be like tuareg-mode
+                         ("M-o" . eassist-switch-h-cpp)
+                         ("M-m" . eassist-list-methods))))
+
+  (use-package google-c-style)
+  (require 'js-c-style)
   (add-hook 'c-mode-common-hook
             (lambda ()
               (google-set-c-style)
@@ -343,7 +422,13 @@
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+  (use-package markdown-mode+)
+  (use-package markdown-toc))
+
+(use-package java-imports)
+(use-package javadoc-lookup)
 
 (use-package csharp-mode
   :mode "\\.cs$"
@@ -366,108 +451,52 @@
 ;;   :load-path "/usr/local/"
 ;;   :config (setq LilyPond-pdf-command "zathura"))
 
+(use-package gnu-apl-mode)
+
 (use-package j-mode
   :config (setq j-console-cmd "ijconsole"))
 
-(use-package erlang)
-(use-package flycheck-rebar3
-  :config (flycheck-rebar3-setup))
+(use-package erlang
+  :config (require 'erlang-start))
 
-(use-package geiser)
+(use-package ponylang-mode
+  :config
+  (add-hook
+   'ponylang-mode-hook
+   (lambda ()
+     (set-variable 'indent-tabs-mode nil)
+     (set-variable 'tab-width 2))))
 
-(use-package elisp-slime-nav
-  :config (add-hook 'emacs-lisp-mode-hook #'elisp-slime-nav-mode))
+(use-package tuareg
+  :bind (:map tuareg-mode-map ("C-c C-z" . utop)))
 
-;;; ocaml
-
-;; XXX TODO rebind merlin C-c C-l and C-c & to M-. and M-,
-
-;; Seriously, why are you messing with my keys?
-(add-hook 'tuareg-mode-hook
-          (lambda ()
-            (define-key tuareg-mode-map "\C-ci" 'magit-status)
-            (define-key tuareg-mode-map "\C-c\C-z" 'utop)))
-
-(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
-(add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-
-;; Setup environment variables using opam
-(dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-  (setenv (car var) (cadr var)))
-
-;; Update the emacs path
-(setq exec-path (append (parse-colon-path (getenv "PATH"))
-                        (list exec-directory)))
-
-;; Update the emacs load path
-(add-to-list 'load-path (expand-file-name "../../share/emacs/site-lisp"
-                                          (getenv "OCAML_TOPLEVEL_PATH")))
-
-;; Automatically load utop.el
-(autoload 'utop "utop" "Toplevel for OCaml" t)
-(autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+(use-package utop
+  :commands (utop utop-setup-ocaml-buffer))
 
 (use-package ocp-indent)
 (use-package merlin
+  :bind (:map merlin-mode-map
+         ("M-." . merlin-locate)
+         ("M-," . merlin-pop-stack))
   :config
   ;; Start merlin on ocaml files
-  (add-hook 'tuareg-mode-hook 'merlin-mode t)
-  (add-hook 'caml-mode-hook 'merlin-mode t)
-  ;; Enable auto-complete
-  (setq merlin-use-auto-complete-mode 'easy)
+  (add-hook 'tuareg-mode-hook (lambda () (merlin-mode 1)))
+  (add-hook 'caml-mode-hook (lambda () (merlin-mode 1)))
   ;; Use opam switch to lookup ocamlmerlin binary
   (setq merlin-command 'opam))
-
-;; (use-package python-pylint)
-;; (use-package python-pep8)
-;; (use-package pysmell-autoloads)
-;; (use-package python-mode
-;;   :config
-;;   (progn
-;;     (add-hook 'python-mode-hook (lambda () (pysmell-mode 1)))
-;;     (setq python-remove-cwd-from-path nil)))
 
 (use-package glsl-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.vert$" . glsl-mode))
   (add-to-list 'auto-mode-alist '("\\.frag$" . glsl-mode)))
 
-(use-package magit
-  :bind (("\C-ci" . magit-status))
-  :config
-  (setq magit-save-repository-buffers nil
-        magit-completing-read-function 'magit-ido-completing-read)
-  (defadvice magit-status (around magit-fullscreen activate)
-    "full screen magit-status"
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
-  (defadvice magit-mode-quit-window (around magit-restore-screen activate)
-    ad-do-it
-    (jump-to-register :magit-fullscreen)))
-
-(autoload 'typing-of-emacs "typing" "The Typing Of Emacs, a game." t)
-
-(require 'tempbuf)
-(dolist (m '("dired" "custom" "Man" "view"))
-  (add-hook (intern (concat m "-mode-hook"))
-            #'turn-on-tempbuf-mode))
-
-(use-package org
-  :config
-  (eval-after-load 'org '(load-file "~/.emacs.d/init-org.el")))
-
-(defvar libnotify-program "/usr/bin/notify-send")
-(defun notify-send (title message)
-  (start-process "notify" " notify"
-                 libnotify-program "--expire-time=4000" title message))
-
-(autoload 'griffin "griffin" "Compile static blog" t)
-
 
 ;;;; finally...
 
-(server-start)
+(use-package server
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 (setq debug-on-error nil
       debug-on-quit nil)
