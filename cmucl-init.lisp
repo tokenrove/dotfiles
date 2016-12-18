@@ -1,7 +1,0 @@
-(require :asdf)
-(pushnew (merge-pathnames ".sbcl/systems/" (user-homedir-pathname))
-         asdf:*central-registry*)
-(in-package :cl-user)
-(defun aclo (foo)
-  (asdf:oos 'asdf:compile-op foo)
-  (asdf:oos 'asdf:load-op foo))
