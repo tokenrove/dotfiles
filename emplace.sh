@@ -29,7 +29,7 @@ for i in \
         gitconfig gitignore \
         mkshrc muttrc \
         screenrc signature \
-        Xdefaults xsession xmonad \
+        Xdefaults xsession \
         zshenv zshrc
 do
     maybe ln $ln_args "$src/$i" ~/.$i || echo "Warning: $i not emplaced"
