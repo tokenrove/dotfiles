@@ -1,11 +1,10 @@
 ;;;; C and C++-related initialization
 
-(js/try-require 'cc-mode-append-include)
-(js/try-require 'gccsense)
+(require 'cc-mode-append-include nil nil)
 
-(global-cwarn-mode)
+(global-cwarn-mode t)
 
-(js/try-require 'google-c-style)
+(use-package google-c-style)
 (defconst js-cpp-style
   `((c-recognize-knr-p . t)
     (c-basic-offset . 4)
@@ -69,14 +68,18 @@
                         (access-label . /)
                         (innamespace . 0))))
   "C++ Programming Style derived from Google")
-(require 'eassist)
+
 (add-hook 'c-mode-common-hook
           (lambda ()
-            ;; XXX should consider C-c C-a instead of M-o to be like tuareg-mode
-            (define-key c-mode-base-map (kbd "M-o") 'eassist-switch-h-cpp)
-            (define-key c-mode-base-map (kbd "M-m") 'eassist-list-methods)
             (google-set-c-style)
             (c-add-style "JS" js-cpp-style t)))
 
-(js/try-require 'guess-style-autoloads)
-;;(js/try-require 'paredit)
+(require 'eassist)
+(add-hook 'c-mode-common-hook
+  (lambda ()
+    (bind-keys :map :c-mode-base-map
+      ;; XXX should consider C-c C-a instead of M-o to be like tuareg-mode
+      ("M-o" . eassist-switch-h-cpp)
+      ("M-m" . eassist-list-methods))))
+
+(use-package dtrt-indent)

@@ -5,8 +5,8 @@
 (require 'org-clock)
 (require 'org-habit)
 (require 'org-capture)
-(when (eql hostname 'temenos)
-  (require 'org-mobile))
+;;(when (eql hostname 'temenos)
+;;  (require 'org-mobile))
 ;;(require 'org-trello)
 ;;(require 'org-checklist)
 (require 'org-crypt)
@@ -216,8 +216,8 @@ Skips capture tasks."
 ;;            (org-mobile-push-with-delay 30)))
 ;;    )))
 
-(when (eql hostname 'temenos)
-  (run-at-time "04:05am" 86400 '(lambda () (org-mobile-push)))) ;; refreshes agenda file each day
+;; (when (eql hostname 'temenos)
+;;   (run-at-time "04:05am" 86400 '(lambda () (org-mobile-push)))) ;; refreshes agenda file each day
 
 ;; (defun install-monitor (file secs)
 ;;   (run-with-timer

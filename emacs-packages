@@ -54,7 +54,6 @@ paredit
 password-store
 per-buffer-theme
 ponylang-mode
-powerline
 pyvenv
 rainbow-blocks
 rainbow-delimiters
@@ -75,3 +74,4 @@ writegood-mode
 ws-butler
 yaml-mode
 undo-tree
+use-package
