@@ -2,8 +2,6 @@
 
 (require 'cc-mode-append-include nil nil)
 
-(global-cwarn-mode t)
-
 (use-package google-c-style)
 (defconst js-cpp-style
   `((c-recognize-knr-p . t)
@@ -69,11 +67,6 @@
                         (innamespace . 0))))
   "C++ Programming Style derived from Google")
 
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (google-set-c-style)
-            (c-add-style "JS" js-cpp-style t)))
-
 (require 'eassist)
 (add-hook 'c-mode-common-hook
   (lambda ()
@@ -81,5 +74,3 @@
       ;; XXX should consider C-c C-a instead of M-o to be like tuareg-mode
       ("M-o" . eassist-switch-h-cpp)
       ("M-m" . eassist-list-methods))))
-
-(use-package dtrt-indent)

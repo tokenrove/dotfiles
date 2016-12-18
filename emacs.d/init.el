@@ -41,11 +41,42 @@
 (menu-bar-mode -1)
 (tooltip-mode -1)
 
-;;(load-theme 'tronesque t)
-;; (load-theme 'mbo70s t)
-(load-theme 'sanityinc-tomorrow-day t)
-;; (let ((fav-light-themes (sanityinc-tomorrow-day sanityinc-solarized-light organic-green-theme))
-;;       (fav-dark-themes (mbo70s sanityinc-tomorrow-eighties tronesque))))
+(use-package color-theme-sanityinc-tomorrow
+  :config
+  (load-theme 'sanityinc-tomorrow-day t t)
+  (load-theme 'sanityinc-tomorrow-eighties t t))
+(use-package tronesque-theme :config (load-theme 'tronesque t t))
+(use-package mbo70s-theme :config (load-theme 'mbo70s t t))
+
+(require 'solar)
+
+(use-package theme-changer
+  :load-path "~/src/theme-changer"
+  :init
+  (setq calendar-location-name "Montreal, QC"
+        calendar-latitude 45.5017
+        calendar-longitude -73.5673)
+  :config
+  (change-theme 'sanityinc-tomorrow-day 'sanityinc-tomorrow-eighties))
+
+(show-paren-mode t)                     ; highlight parenthesis matches.
+(setq-default
+ even-window-heights nil               ; I don't like emacs destroying my window setup
+ resize-mini-windows nil
+ cursor-in-non-selected-windows nil    ; Don't show a cursor in other windows
+ scroll-preserve-screen-position 'keep ; Scrolling is moving the document, not moving my eyes
+ inhibit-startup-message t             ; we know where we are.
+ x-stretch-cursor t                    ; A wide characters ask for a wide cursor
+ x-select-enable-clipboard t ; can kill these when emacs 25 is everywhere
+ x-select-enable-primary t
+ select-enable-clipboard t
+ select-enable-primary t
+ save-interprogram-paste-before-kill t
+ mouse-yank-at-point t ; I want a mouse yank to be inserted where the point is, not where i click
+ mouse-highlight 1) ; Don't highlight stuff that I can click on all the time. I don't click anyways.
+(blink-cursor-mode -1)                  ; less wakeups: save power.
+(mouse-avoidance-mode 'banish)          ; get the rodent out of my way.
+(setq ring-bell-function 'ignore)       ; stop triggering curtis
 
 
 ;;;; MODELINE
@@ -81,14 +112,10 @@
 
 ;;;; Random important emacs customizations
 
-(show-paren-mode t)                     ; highlight parenthesis matches.
-(setq-default font-lock-auto-fontify t) ; always do syntax highlighting.
-(global-font-lock-mode t)               ;   really.
 (setq-default show-trailing-whitespace t
               comment-style 'extra-line ; nice comment format
               indent-tabs-mode nil)
-(setq make-backup-files nil            ; herecy, I know.
-      compilation-scroll-output 'first-error)
+(setq make-backup-files nil)            ; herecy, I know.
 (put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
 (put 'downcase-region 'disabled nil)
 (set-fill-column 74)                    ; not quite standard.
@@ -96,10 +123,15 @@
 (set-language-environment "UTF-8")      ; anything ken invented must be good.
 (prefer-coding-system 'utf-8)           ;   ditto.
 
+(use-package compile
+  :config (setq compilation-scroll-output 'first-error))
+
 (unless (eql system-type 'windows-nt)
-  (global-auto-revert-mode 1)
-  (setq global-auto-revert-non-file-buffers t
-        auto-revert-verbose nil))
+  (use-package autorevert
+    :config
+    (global-auto-revert-mode 1)
+    (setq global-auto-revert-non-file-buffers t
+          auto-revert-verbose nil)))
 
 (random t)                              ; Do random numbers
 
@@ -108,29 +140,19 @@
 (setq-default
  tab-always-indent 'complete
  dabbrev-case-replace t                ; match case with M-/
- font-lock-maximum-decoration t
- even-window-heights nil               ; I don't like emacs destroying my window setup
- resize-mini-windows nil
- cursor-in-non-selected-windows nil    ; Don't show a cursor in other windows
  display-time-24hr-format t            ; No am/pm here
  default-tab-width 8                   ; A tab is 8 spaces is 8 spaces is 8 spaces
- scroll-preserve-screen-position 'keep ; Scrolling is moving the document, not moving my eyes
- inhibit-startup-message t             ; we know where we are.
- x-stretch-cursor t                    ; A wide characters ask for a wide cursor
- x-select-enable-clipboard t
- select-enable-clipboard t
- x-select-enable-primary t
- select-enable-primary t
- save-interprogram-paste-before-kill t
- apropos-do-all t
- mouse-yank-at-point t ; I want a mouse yank to be inserted where the point is, not where i click
- mouse-highlight 1 ; Don't highlight stuff that I can click on all the time. I don't click anyways.
- visible-bell t)                       ; Beeps suck
-(blink-cursor-mode -1)                  ; less wakeups: save power.
-(mouse-avoidance-mode 'banish)          ; get the rodent out of my way.
-(setq ring-bell-function 'ignore)       ; stop triggering curtis
+ apropos-do-all t)
+
 
 ;;;; PACKAGES
+
+(use-package sendmail
+  :mode "/mutt-.*"
+  :bind (:mail-mode-map ("C-c C-c" . (lambda () (interactive)
+                                       (save-buffer) (server-edit))))
+  :config
+  (add-hook 'mail-mode-hook #'turn-on-auto-fill))
 
 (use-package ido
   :config
@@ -268,8 +290,6 @@
               (when (eq major-mode 'compilation-mode)
                 (ansi-color-apply-on-region compilation-filter-start (point-max))))))
 
-(require 'cc-mode)
-
 (use-package semantic
   :config
   (global-semanticdb-minor-mode 1)
@@ -307,7 +327,17 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
 (add-to-list 'load-path "~/src/elisp/")
 
-(load-file "~/.emacs.d/init-c.el")
+(use-package cc-mode
+  :config
+  (global-cwarn-mode t)
+  (load-file "~/.emacs.d/init-c.el")
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (google-set-c-style)
+              (c-add-style "JS" js-cpp-style t))))
+
+(use-package dtrt-indent
+  :config (dtrt-indent-mode 1))
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)

@@ -5,10 +5,6 @@
 (require 'org-clock)
 (require 'org-habit)
 (require 'org-capture)
-;;(when (eql hostname 'temenos)
-;;  (require 'org-mobile))
-;;(require 'org-trello)
-;;(require 'org-checklist)
 (require 'org-crypt)
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -56,8 +52,6 @@
           (lambda ()
             (define-key org-mode-map [?\C-,] (lookup-key global-map [?\C-x]))
             (define-key global-map "\C-\M-r" 'org-capture)))
-;;(add-hook 'org-mode-hook 'org-trello-mode)
-
 
 (setq org-capture-templates
       (quote (("t" "todo" entry (file org-default-notes-file)
@@ -184,55 +178,9 @@ Skips capture tasks."
 	      (org-fit-window-to-buffer)
 	      ;; (org-agenda-redo)
 	      )))
-      (call-interactively 'org-agenda-list)))
-  ;;(let ((buf (get-buffer "*Calendar*")))
-  ;;  (unless (get-buffer-window buf)
-  ;;    (org-agenda-goto-calendar)))
-  )
-
-;; (run-with-idle-timer 300 t 'jump-to-org-agenda)
+      (call-interactively 'org-agenda-list))))
 
 (add-to-list 'org-modules 'org-habit)
 (org-babel-do-load-languages
  'org-babel-load-languages
  (mapcar (lambda (x) (cons x t)) '(emacs-lisp lisp R C haskell ocaml ruby python lilypond)))
-;; (setq org-src-fontify-natively t
-;;       org-export-htmlize-output-type 'css)
-
-;; (defvar org-mobile-push-timer nil)
-
-;; (defun org-mobile-push-with-delay (secs)
-;;   (when org-mobile-push-timer
-;;     (cancel-timer org-mobile-push-timer))
-;;   (setq org-mobile-push-timer
-;;         (run-with-idle-timer
-;;          (* 1 secs) nil 'org-mobile-push)))
-
-;; (add-hook 'after-save-hook
-;;  (lambda ()
-;;    (when (eq major-mode 'org-mode)
-;;      (dolist (file (org-mobile-files-alist))
-;;        (if (string= (expand-file-name (car file)) (buffer-file-name))
-;;            (org-mobile-push-with-delay 30)))
-;;    )))
-
-;; (when (eql hostname 'temenos)
-;;   (run-at-time "04:05am" 86400 '(lambda () (org-mobile-push)))) ;; refreshes agenda file each day
-
-;; (defun install-monitor (file secs)
-;;   (run-with-timer
-;;    0 secs
-;;    (lambda (f p)
-;;      (unless (< p (second (time-since (elt (file-attributes f) 5))))
-;;        (org-mobile-pull)))
-;;    file secs))
-
-;; (install-monitor (file-truename
-;;                   (concat
-;;                    (file-name-as-directory org-mobile-directory)
-;;                           org-mobile-capture-file))
-;;                  5)
-
-;; ;; Do a pull every 5 minutes to circumvent problems with timestamping
-;; ;; (ie. dropbox bugs)
-;; (run-with-timer 0 (* 5 60) 'org-mobile-pull)
