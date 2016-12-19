@@ -5,6 +5,9 @@
 
 (eval-when-compile (require 'cl))
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+(add-to-list 'load-path "~/src/elisp/")
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -387,9 +390,6 @@
 
 (use-package elisp-slime-nav
   :config (add-hook 'emacs-lisp-mode-hook #'elisp-slime-nav-mode))
-
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
-(add-to-list 'load-path "~/src/elisp/")
 
 (use-package cc-mode
   :config
