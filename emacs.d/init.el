@@ -488,6 +488,11 @@
   (add-to-list 'auto-mode-alist '("\\.vert$" . glsl-mode))
   (add-to-list 'auto-mode-alist '("\\.frag$" . glsl-mode)))
 
+(use-package rust-mode
+  :config
+  (use-package flycheck-rust
+    :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+
 
 ;;;; finally...
 
