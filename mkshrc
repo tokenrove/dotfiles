@@ -20,6 +20,10 @@ export PS1 PS4
 
 if [ $TERM -eq st-256color ]; then export TERM=xterm; fi
 
+export MANPATH=/usr/share/man:/usr/local/man:$HOME/share/man
+
+alias ls='ls -F'
+
 # OPAM configuration
 . /home/julian/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 export SBCL_HOME=$HOME/lib/sbcl
