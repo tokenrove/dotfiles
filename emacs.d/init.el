@@ -354,12 +354,6 @@
 
 ;;;; PROGRAMMING LANGUAGES
 
-(use-package semantic
-  :config
-  (global-semanticdb-minor-mode 1)
-  (global-semantic-idle-scheduler-mode 1)
-  (add-hook 'prog-mode-hook #'semantic-mode))
-
 (use-package paredit
   :config
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
