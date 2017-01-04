@@ -468,6 +468,10 @@
 (use-package j-mode
   :config (setq j-console-cmd "ijconsole"))
 
+(use-package julia-mode
+  :config
+  (use-package julia-shell))
+
 (use-package erlang
   :config (require 'erlang-start))
 
