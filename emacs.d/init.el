@@ -451,6 +451,19 @@
 
 (use-package gnu-apl-mode)
 
+
+(use-package haskell-mode
+  :config
+  (use-package flycheck-haskell
+    :commands flycheck-haskell-setup)
+  (setq-default
+   haskell-process-type 'stack-ghci
+   haskell-process-load-or-reload-prompt t
+   haskell-interactive-mode-scroll-to-bottom t
+   haskell-font-lock-symbols t)
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
+
 (use-package j-mode
   :config (setq j-console-cmd "ijconsole"))
 
