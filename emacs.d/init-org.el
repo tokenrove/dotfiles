@@ -182,6 +182,3 @@ Skips capture tasks."
       (call-interactively 'org-agenda-list))))
 
 (add-to-list 'org-modules 'org-habit)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- (mapcar (lambda (x) (cons x t)) '(emacs-lisp lisp R C haskell ocaml ruby python lilypond)))
