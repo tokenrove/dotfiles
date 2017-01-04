@@ -315,7 +315,8 @@
 
 (use-package writegood-mode
   :config
-  (add-hook 'text-mode #'writegood-turn-on))
+  (dolist (m '(text-mode-hook mail-mode-hook markdown-mode-hook))
+    (add-hook m #'writegood-turn-on)))
 
 (use-package snakehump)
 (use-package ssh-file-modes)
