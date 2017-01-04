@@ -7,4 +7,4 @@ export CVS_RSH="ssh"
 export EMAIL='julian@cipht.net'
 
 # Note http://www.zsh.org/mla/users/2003/msg00600.html
-export PATH=$PATH:~/bin
+export PATH=~/bin:$PATH:~/.local/bin

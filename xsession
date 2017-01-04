@@ -1,3 +1,10 @@
+#!/bin/sh
+
+if [ -z "$__run_with_own_shell" ]; then
+    __run_with_own_shell=1 exec "$SHELL" "$0" "$@"
+fi
+
+PATH=$HOME/bin:$PATH
 
 HOSTNAME=$(hostname)
 
@@ -41,4 +48,4 @@ else
     st -f Inconsolata-22 &
 fi
 
-dwm
+exec dwm

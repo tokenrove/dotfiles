@@ -31,5 +31,7 @@ if [ -d ~/lib/android-sdk-linux/tools ]; then
     export PATH=$PATH:~/lib/android-sdk-linux/tools
 fi
 
-# OPAM configuration
-. /home/julian/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+maybe_source() { if [ -e "$1" ]; then source "$1"; fi; }
+
+maybe_source $HOME/.opam/opam-init/init.zsh
+maybe_source $HOME/.cargo/env
