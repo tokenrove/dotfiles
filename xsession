@@ -15,7 +15,7 @@ if [ $HOSTNAME = temenos ]; then
     xrandr --output VGA1 --mode 1280x1024x60
 fi
 
-if [ `uname` = DragonFly ]; then
+if [ $(uname) = DragonFly ]; then
     setxkbmap dvorak -option "ctrl:nocaps,compose:ralt"
 fi
 
@@ -37,10 +37,12 @@ unclutter -grab -keystroke &
 ## ibus interacts badly with compose key in emacs or something
 XMODIFIERS=@im=none emacs &
 
-export GTK_IM_MODULE='uim'
-export QT_IM_MODULE='uim'
-uim-xim &
-export XMODIFIERS='@im=uim'
+if [ -z "${XMODIFIERS+x}" ]; then
+   export GTK_IM_MODULE='uim'
+   export QT_IM_MODULE='uim'
+   uim-xim &
+   export XMODIFIERS='@im=uim'
+fi
 
 if which stterm; then
     stterm -f Inconsolata-22 &
