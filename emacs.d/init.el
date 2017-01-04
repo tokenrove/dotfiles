@@ -324,6 +324,11 @@
 (use-package volume)
 (use-package verify-url)
 
+(use-package git-gutter
+  :ensure t
+  :init (global-git-gutter-mode)
+  :config (setq git-gutter:update-interval 1))
+
 ;;;; KEY BINDINGS
 
 (bind-keys
