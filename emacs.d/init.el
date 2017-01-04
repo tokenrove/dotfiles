@@ -364,6 +364,7 @@
   :config
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook #'enable-paredit-mode)
   (define-key paredit-mode-map (read-kbd-macro "C-j") nil))
 
 (use-package slime
