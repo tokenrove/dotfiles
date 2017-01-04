@@ -22,6 +22,12 @@ fi
 
 xinput set-prop 'SynPS/2 Synaptics TouchPad' 'Device Enabled' 0
 
+if [ "$HOSTNAME" = mobcap ]; then
+   xinput set-prop bcm5974 'Trackpad Thumb Detection' 1 1
+   xinput set-prop bcm5974 'Trackpad Palm Detection' 1 1
+   xinput set-prop bcm5974 'Trackpad Tap Button Emulation' 0 3 2 0
+fi
+
 xrdb .Xdefaults
 
 #arbtt-capture &
