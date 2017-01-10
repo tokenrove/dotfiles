@@ -514,6 +514,10 @@
 
 ;;;; finally...
 
+(use-package pinentry
+  :config
+  (pinentry-start))
+
 (use-package server
   :config
   (unless (server-running-p)
