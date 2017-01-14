@@ -25,6 +25,10 @@ alias ls="ls -F"
 # Note http://www.zsh.org/mla/users/2003/msg00600.html
 export PATH=$PATH:~/bin
 
+if [ "$(uname)" = FreeBSD -a "$TERM" = st-256color ]; then
+    TERM=xterm-256color
+fi
+
 # interactive shell path additions can follow:
 
 if [ -d ~/lib/android-sdk-linux/tools ]; then

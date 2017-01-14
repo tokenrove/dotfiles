@@ -5,15 +5,18 @@ set -eu
 mkdir -p ~/build ~/lib ~/bin
 cd ~/build
 
+if which gmake; then MAKE=gmake; else MAKE=make; fi
+
 # emacs 25
 {
     if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls28-dev texinfo libgtk2.0-dev; fi
+    if [ $(uname) = FreeBSD ]; then sudo pkg install cairo; fi
     git clone git://git.savannah.gnu.org/emacs.git ~/build/emacs
     cd ~/build/emacs
     ./autogen.sh
     ./configure --prefix=$HOME/lib/emacs --without-dbus --without-gsettings --without-libsystemd --without-toolkit-scroll-bars --with-cairo
-    make
-    make install
+    $MAKE
+    $MAKE install
     ln -s ~/lib/emacs/bin/* ~/bin
 }
 
@@ -42,7 +45,7 @@ EOF
 # opam
 {
     opam init
-    opam switch 4.03.0
+    opam switch 4.04.0
     opam install merlin
 }
 

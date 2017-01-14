@@ -15,8 +15,9 @@ if [ $HOSTNAME = temenos ]; then
     xrandr --output VGA1 --mode 1280x1024x60
 fi
 
-if [ $(uname) = DragonFly ]; then
-    setxkbmap dvorak -option "ctrl:nocaps,compose:ralt"
+if [ $(uname) = DragonFly -o $(uname) = FreeBSD ]; then
+    setxkbmap -layout dvorak,apl -option "ctrl:nocaps,compose:ralt,grp:menu_toggle"
+    eval $(ssh-agent)
 fi
 
 xinput set-prop 'SynPS/2 Synaptics TouchPad' 'Device Enabled' 0
