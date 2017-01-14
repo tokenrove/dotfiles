@@ -44,7 +44,36 @@ if [ -d ~/lib/android-sdk-linux/tools ]; then
     export PATH=$PATH:~/lib/android-sdk-linux/tools
 fi
 
-maybe_source() { if [ -e "$1" ]; then source "$1"; fi; }
+maybe_source() { [ -r "$1" ] && source "$1" }
 
 maybe_source $HOME/.opam/opam-init/init.zsh
 maybe_source $HOME/.cargo/env
+maybe_source $HOME/.travis/travis.sh
+maybe_source $HOME/.secrets.sh
+
+#### COMPLETION
+
+if [ -r ~/work/salt/pillars/servers.sls ]; then
+    # complete hosts from salt
+    zstyle ':completion:*:ssh:*' hosts $(awk '/new_name/ { print $2 } ' ~/work/salt/pillars/servers.sls)
+    zstyle ':completion:*:scp:*' hosts $(awk '/new_name/ { print $2 } ' ~/work/salt/pillars/servers.sls)
+fi
+
+#### FUNCTIONS
+
+function perf-mode() {
+    sudo cpupower -c all frequency-set -g performance &&
+        sudo cpupower -c all set -b 0
+}
+
+function powersave-mode() {
+    sudo cpupower -c all frequency-set -g powersave &&
+        sudo cpupower -c all set -b 15
+}
+
+function fuck-rebar() {
+    if [ -d ~/.cache/rebar3/hex ]; then rm -r ~/.cache/rebar3/hex; fi
+    # Beware, this could delete your unstaged work; consider just
+    # blowing away _build instead.
+    git clean -xdf | awk '/Skipping/ { print $3 }' | xargs -r rm -r
+}
