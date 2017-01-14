@@ -29,6 +29,8 @@ if [ "$(uname)" = FreeBSD -a "$TERM" = st-256color ]; then
     TERM=xterm-256color
 fi
 
+export GPG_TTY=$(tty)
+
 # interactive shell path additions can follow:
 
 if [ -d ~/lib/android-sdk-linux/tools ]; then

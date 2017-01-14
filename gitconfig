@@ -4,9 +4,12 @@
 [user]
 	name = Julian Squires
 	email = julian@cipht.net
+	signingkey = DA6D1862
 [core]
 	excludesfile = /home/julian/.gitignore
 [rebase]
 	autostash = true
 [pull]
 	rebase = true
+[commit]
+	gpgsign = true
