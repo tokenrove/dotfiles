@@ -13,3 +13,5 @@
 	rebase = true
 [commit]
 	gpgsign = true
+[include]
+	path = ~/.gitconfig.local
