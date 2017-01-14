@@ -22,6 +22,11 @@ PS1='%B%(?..%F{red}%?%f )%F{black}%n@%m:%3~ %f%b%F{cyan}${vcs_info_msg_0_}%f%F{y
 zstyle ':vcs_info:*' enable git
 setopt promptsubst
 
+unset RPROMPT                   # nix sets this by default!
+
+unsetopt FLOWCONTROL            # let me use ^S
+unsetopt CASE_GLOB
+
 alias ls="ls -F"
 
 # Note http://www.zsh.org/mla/users/2003/msg00600.html
