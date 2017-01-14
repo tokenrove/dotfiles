@@ -1,3 +1,5 @@
+# -*- shell-script -*-
+
 # Lines configured by zsh-newuser-install
 unset HISTFILE
 HISTSIZE=10000
