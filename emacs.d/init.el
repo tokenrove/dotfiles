@@ -329,6 +329,8 @@
   :init (global-git-gutter-mode)
   :config (setq git-gutter:update-interval 1))
 
+(use-package nix-mode)
+
 ;;;; KEY BINDINGS
 
 (bind-keys
