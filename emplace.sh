@@ -26,9 +26,10 @@ if $force; then ln_args=-snf; fi
 
 for i in \
         emacs.d \
+        ccl-init.lisp \
         gitconfig gitignore \
         mkshrc muttrc \
-        screenrc signature \
+        sbclrc screenrc signature \
         Xdefaults xsession \
         zshenv zshrc
 do
