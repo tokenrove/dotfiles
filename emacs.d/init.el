@@ -264,11 +264,6 @@
 
 (use-package midnight)
 
-(require 'tempbuf)
-(dolist (m '("dired" "custom" "Man" "view"))
-  (add-hook (intern (concat m "-mode-hook"))
-            #'turn-on-tempbuf-mode))
-
 (use-package org
   :config
   (eval-after-load 'org '(load-file "~/.emacs.d/init-org.el")))
