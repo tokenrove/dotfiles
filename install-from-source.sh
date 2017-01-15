@@ -82,6 +82,13 @@ rebar3() {
     cd ~/bin && wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
 }
 
+quicklisp() {
+    unless ~/lib/quicklisp
+    wget https://beta.quicklisp.org/quicklisp.lisp https://beta.quicklisp.org/quicklisp.lisp.asc
+    gpg --keyserver keys.gnupg.net --verify quicklisp.lisp.asc
+    sbcl --non-interactive --load quicklisp.lisp --eval '(quicklisp-quickstart:install :path "~/lib/quicklisp")'
+}
+
 if [ $# = 0 ]; then
     echo "Usage: $0 [package to install...]"
     echo
@@ -90,6 +97,7 @@ if [ $# = 0 ]; then
          emacs \
          marelle \
          opam otp \
+         quicklisp \
          rebar3
     exit 0
 fi
