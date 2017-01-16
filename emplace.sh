@@ -24,6 +24,9 @@ maybe() { if $nope; then echo "$@"; else "$@"; fi; }
 ln_args=-sn
 if $force; then ln_args=-snf; fi
 
+decolor="$(tput sgr0)"
+to_color() { if "$@"; then tput setaf 2; else tput setaf 1; fi; }
+
 for i in \
         emacs.d \
         ccl-init.lisp \
@@ -33,7 +36,10 @@ for i in \
         Xdefaults xsession \
         zshenv zshrc
 do
-    maybe ln $ln_args "$src/$i" ~/.$i || echo "Warning: $i not emplaced"
-done
+    color=$(to_color maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null)
+    printf "${color}%s${decolor} " "$i"
+done | fmt
 
-maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose
+color=$(to_color maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose 2>/dev/null)
+printf "${color}%s${decolor} " XCompose
+echo
