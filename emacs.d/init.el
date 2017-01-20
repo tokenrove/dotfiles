@@ -469,6 +469,10 @@
   :config
   (use-package julia-shell))
 
+(use-package lua-mode
+  :config
+  (use-package company-lua))
+
 (use-package erlang
   :config (require 'erlang-start))
 
