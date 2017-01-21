@@ -161,7 +161,7 @@
 (defun js--save-and-leave-emacsclient () (interactive)
   (save-buffer) (server-edit))
 (use-package sendmail
-  :mode "/mutt-.*"
+  :mode ("/mutt-.*" . mail-mode)
   :bind (:map mail-mode-map ("C-c C-c" . js--save-and-leave-emacsclient))
   :config (add-hook 'mail-mode-hook #'turn-on-auto-fill))
 
