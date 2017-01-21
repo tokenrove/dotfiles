@@ -283,7 +283,6 @@
   (global-company-mode 1)
   (use-package company-c-headers
     :config (add-to-list 'company-backends 'company-c-headers))
-  (use-package company-quickhelp :config (company-quickhelp-mode 1))
   (use-package company-statistics :config (company-statistics-mode 1)))
 
 (use-package flycheck
