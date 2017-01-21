@@ -273,7 +273,11 @@
   (start-process "notify" " notify"
                  libnotify-program "--expire-time=4000" title message))
 
-(autoload 'griffin "griffin" "Compile static blog" t)
+(use-package griffin
+  :defer t
+  :ensure nil
+  :load-path "~/src/griffin"
+  :commands (griffin))
 
 (use-package company
   :ensure t
