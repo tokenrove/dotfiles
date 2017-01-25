@@ -45,11 +45,15 @@
 (tooltip-mode -1)
 
 (use-package color-theme-sanityinc-tomorrow
-  :config
+  :init
   (load-theme 'sanityinc-tomorrow-day t t)
+  (load-theme 'sanityinc-tomorrow-night t t)
   (load-theme 'sanityinc-tomorrow-eighties t t))
-(use-package mbo70s-theme :config (load-theme 'mbo70s t t))
-;; other good themes, omitted here: tronesque, tron, cyberpunk, organic-green, goose
+(use-package mbo70s-theme :init (load-theme 'mbo70s t t))
+(use-package tronesque-theme :init (load-theme 'tronesque t t))
+(use-package cyberpunk-theme :init (load-theme 'cyberpunk t t))
+(use-package organic-green-theme :init (load-theme 'organic-green t t))
+(use-package goose-theme :init (load-theme 'goose t t))
 
 (require 'solar)
 
@@ -60,7 +64,9 @@
         calendar-latitude 45.5017
         calendar-longitude -73.5673)
   :config
-  (change-theme 'sanityinc-tomorrow-day 'sanityinc-tomorrow-eighties))
+  (change-theme
+   '(sanityinc-tomorrow-day organic-green goose)
+   '(sanityinc-tomorrow-eighties sanityinc-tomorrow-night mbo70s cyberpunk tronesque)))
 
 (show-paren-mode t)                     ; highlight parenthesis matches.
 (setq-default
