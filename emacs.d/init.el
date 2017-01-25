@@ -441,6 +441,8 @@
   (setq inferior-fsharp-program "fsi --readline-"
         fsharp-compiler "fsc"))
 
+(use-package forth-mode)
+
 (use-package cperl-mode
   :init
   (defalias 'perl-mode 'cperl-mode)
