@@ -27,3 +27,4 @@ _$*
 core
 # CVS default ignores end
 emacs.d/elpa/
+emacs.d/custom.el
