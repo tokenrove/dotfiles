@@ -27,6 +27,9 @@
       use-package-always-ensure t)
 (require 'bind-key)
 
+;;; I probably don't need to do this anymore, but I used to need this
+;;; because I'd depend on debian-installed emacs packages, but use my
+;;; own emacs compiled from source.
 (let ((debian-startup "/usr/share/emacs/site-lisp/debian-startup.el"))
   (when (file-exists-p debian-startup)
     (load-file debian-startup)
