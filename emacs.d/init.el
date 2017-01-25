@@ -9,7 +9,7 @@
 (add-to-list 'load-path "~/src/elisp/")
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(load custom-file t)
 
 (require 'package)
 (setq package-enable-at-startup nil)
