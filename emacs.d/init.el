@@ -117,7 +117,8 @@
 
 (setq-default show-trailing-whitespace t
               comment-style 'extra-line ; nice comment format
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              sort-fold-case t)
 (setq make-backup-files nil)            ; herecy, I know.
 (put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
 (put 'downcase-region 'disabled nil)
