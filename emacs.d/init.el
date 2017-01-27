@@ -452,6 +452,10 @@
 
 (use-package forth-mode)
 
+(use-package fuel
+  :config
+  (setq fuel-factor-root-dir "~/lib/factor"))
+
 (use-package cperl-mode
   :init
   (defalias 'perl-mode 'cperl-mode)
