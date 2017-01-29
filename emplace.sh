@@ -24,10 +24,25 @@ maybe() { if $nope; then echo "$@"; else "$@"; fi; }
 ln_args=-sn
 if $force; then ln_args=-snf; fi
 
-decolor="$(tput sgr0)"
-to_color() { if "$@"; then tput setaf 2; else tput setaf 1; fi; }
+if [ "$(uname)" = Linux ]; then   # GNU userland
+    reformat() { fmt -u; }
+    setaf() { tput setaf "$@"; }
+    reset() { tput sgr0; }
+else
+    reformat() { cat; }
+    setaf() { tput AF "$@"; }
+    reset() { tput me; }
+fi
 
-for i in \
+colored() {
+    s=$1; shift
+    if "$@"; then setaf 2; else setaf 1; fi ||:
+    echo -n "$s "
+    reset ||:
+}
+
+main() {
+    for i in \
         emacs.d \
         ccl-init.lisp \
         gitconfig gitignore \
@@ -35,11 +50,11 @@ for i in \
         sbclrc screenrc signature \
         Xdefaults xsession \
         zshenv zshrc
-do
-    color=$(to_color maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null)
-    printf "${color}%s${decolor} " "$i"
-done | fmt
+    do
+        colored "$i" maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null
+    done
+    colored XCompose maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose 2>/dev/null
+}
 
-color=$(to_color maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose 2>/dev/null)
-printf "${color}%s${decolor} " XCompose
+main | reformat
 echo
