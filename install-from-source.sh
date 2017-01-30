@@ -62,8 +62,8 @@ EOF
 install_opam() {
     unless ~/.opam/4.04.0/ocp-indent
     opam init
-    opam switch 4.04.0
-    opam install merlin ocp-indent
+    opam switch -y 4.04.0
+    opam install -y merlin ocp-indent
 }
 
 install_otp() {
