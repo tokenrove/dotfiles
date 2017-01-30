@@ -20,7 +20,7 @@ unless() {
     esac
 }
 
-emacs() {
+install_emacs() {
     unless emacs
     if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls28-dev texinfo libgtk2.0-dev; fi
     if [ "$(uname)" = FreeBSD ]; then sudo pkg install cairo; fi
@@ -33,7 +33,7 @@ emacs() {
     ln -s ~/lib/emacs/bin/* ~/bin
 }
 
-dwm() {
+install_dwm() {
     unless dwm
     if which apt-get; then sudo apt-get -y install libft-dev; fi
     curl -O http://dl.suckless.org/dwm/dwm-6.1.tar.gz
@@ -45,7 +45,7 @@ dwm() {
     ln -s ~/lib/dwm/bin/* ~/bin
 }
 
-marelle() {
+install_marelle() {
     unless marelle
     if [ ! -x "$(which swipl)" ]; then
         echo "bailing: need swipl installed; too lazy to get it ourselves."
@@ -59,14 +59,14 @@ EOF
     chmod a+x ~/bin/marelle
 }
 
-opam() {
+install_opam() {
     unless ~/.opam/4.04.0/ocp-indent
     opam init
     opam switch 4.04.0
     opam install merlin ocp-indent
 }
 
-otp() {
+install_otp() {
     if [ "${ERL_TOP:-x}" = x ]; then
         echo "ERL_TOP should be set; your zshenv is probably busted"
         exit 1
@@ -77,12 +77,12 @@ otp() {
     ./otp_build all
 }
 
-rebar3() {
+install_rebar3() {
     unless rebar3
     cd ~/bin && wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
 }
 
-quicklisp() {
+install_quicklisp() {
     unless ~/lib/quicklisp
     wget https://beta.quicklisp.org/quicklisp.lisp https://beta.quicklisp.org/quicklisp.lisp.asc
     gpg --keyserver keys.gnupg.net --verify quicklisp.lisp.asc
@@ -103,6 +103,6 @@ if [ $# = 0 ]; then
 fi
 
 while [ $# -gt 0 ]; do
-    ("$1")
+    ("install_$1")
     shift
 done
