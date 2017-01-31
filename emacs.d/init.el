@@ -194,8 +194,7 @@
 
 (use-package color-identifiers-mode
   :config
-  (color-identifiers-mode t)
-  (delight 'color-identifiers-mode))
+  (global-color-identifiers-mode t))
 
 (use-package hl-line
   :config (global-hl-line-mode t))
