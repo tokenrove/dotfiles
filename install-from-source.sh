@@ -89,6 +89,17 @@ install_quicklisp() {
     sbcl --non-interactive --load quicklisp.lisp --eval '(quicklisp-quickstart:install :path "~/lib/quicklisp")'
 }
 
+install_urweb() {
+    unless urweb
+    git clone https://github.com/urweb/urweb.git
+    cd urweb
+    ./autogen.sh
+    ./configure --prefix=$HOME/lib/urweb
+    make
+    make install ||:            # ldconfig will fail
+    ln -s ~/lib/urweb/bin/urweb ~/bin
+}
+
 if [ $# = 0 ]; then
     echo "Usage: $0 [package to install...]"
     echo
@@ -98,7 +109,8 @@ if [ $# = 0 ]; then
          marelle \
          opam otp \
          quicklisp \
-         rebar3
+         rebar3 \
+         urweb
     exit 0
 fi
 
