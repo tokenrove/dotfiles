@@ -52,11 +52,20 @@
   (load-theme 'sanityinc-tomorrow-day t t)
   (load-theme 'sanityinc-tomorrow-night t t)
   (load-theme 'sanityinc-tomorrow-eighties t t))
-(use-package mbo70s-theme :init (load-theme 'mbo70s t t))
-(use-package tronesque-theme :init (load-theme 'tronesque t t))
+
+(use-package abyss-theme :init (load-theme 'abyss t t))
 (use-package cyberpunk-theme :init (load-theme 'cyberpunk t t))
-(use-package organic-green-theme :init (load-theme 'organic-green t t))
 (use-package goose-theme :init (load-theme 'goose t t))
+(use-package hydandata-light-theme :init (load-theme 'hydandata-light t t))
+(use-package mbo70s-theme :init (load-theme 'mbo70s t t))
+(use-package organic-green-theme :init (load-theme 'organic-green t t))
+(use-package sea-before-storm-theme :init (load-theme 'sea-before-storm t t))
+(use-package silkworm-theme :init (load-theme 'silkworm t t))
+(use-package soft-morning-theme :init (load-theme 'soft-morning t t))
+(use-package soft-stone-theme :init (load-theme 'soft-stone t t))
+(use-package tronesque-theme :init (load-theme 'tronesque t t))
+(use-package twilight-bright-theme :init (load-theme 'twilight-bright t t))
+(use-package underwater-theme :init (load-theme 'underwater t t))
 
 (require 'solar)
 
@@ -68,8 +77,22 @@
         calendar-longitude -73.5673)
   :config
   (change-theme
-   '(sanityinc-tomorrow-day organic-green goose)
-   '(sanityinc-tomorrow-eighties sanityinc-tomorrow-night mbo70s cyberpunk tronesque)))
+   '(goose
+     hydandata-light
+     organic-green
+     sanityinc-tomorrow-day
+     silkworm
+     soft-morning
+     soft-stone
+     twilight-bright)
+   '(abyss
+     cyberpunk
+     mbo70s
+     sanityinc-tomorrow-eighties
+     sanityinc-tomorrow-night
+     sea-before-storm
+     tronesque
+     underwater)))
 
 (show-paren-mode t)                     ; highlight parenthesis matches.
 (setq-default
