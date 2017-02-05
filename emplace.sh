@@ -53,6 +53,8 @@ main() {
     do
         colored "$i" maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null
     done
+    mkdir -p ~/.config/common-lisp/source-registry.conf.d/
+    colored asdf.conf maybe ln $ln_args "$src/asdf.conf" ~/.config/common-lisp/source-registry.conf.d/50-local.conf 2>/dev/null
     colored XCompose maybe ln $ln_args "$src/vendor/xcompose/dotXCompose" ~/.XCompose 2>/dev/null
 }
 
