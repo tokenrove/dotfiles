@@ -129,8 +129,8 @@
               indent-tabs-mode nil
               sort-fold-case t)
 (setq make-backup-files nil)            ; herecy, I know.
-(put 'narrow-to-region 'disabled nil)   ; don't bitch at me for using ^Xnn
-(put 'downcase-region 'disabled nil)
+(dolist (f '(downcase-region narrow-to-region timer-list))
+  (put f 'disabled nil))
 (set-fill-column 74)                    ; not quite standard.
 (delete-selection-mode -1)
 (set-language-environment "UTF-8")      ; anything ken invented must be good.
