@@ -64,3 +64,38 @@ function fuck-rebar() {
     # blowing away _build instead.
     git clean -xdf | awk '/Skipping/ { print $3 }' | xargs -r rm -r
 }
+
+function my-git-clones() {
+    # we could use -execdir pwd instead, but it's not posix.
+    find ~/src ~/work ~/doc ~/edu ~/web ~/mus \
+         -name .git -prune -exec dirname '{}' ';' 2>/dev/null
+}
+
+function dirty-trees() {
+    for i in $(my-git-clones); do
+        [ -n "$(git -C $i diff --shortstat 2>/dev/null | tail -1)" ] && echo "$i"
+    done
+}
+
+function unpushed-commits() {
+    for i in $(my-git-clones); do
+        [ -n "$(git -C $i log --branches --not --remotes --exit-code 2>/dev/null | tail -1)" ] && echo "$i"
+    done
+}
+
+function changes-today() {
+    local plus=0; local minus=0;
+    for i in $(my-git-clones); do
+        # remove HEAD to include unstaged changes; might be a better
+        # way to present both.
+        git -C $i diff --shortstat HEAD '@{yesterday}' 2>/dev/null | cut -d' ' -f 5,7 |
+            if read inserts deletes; then
+                if [ "$1" = "-v" ]; then
+                    echo $(basename $i) ${inserts:-0} ${deletes:-0}
+                fi
+                plus=$(expr $plus + ${inserts:-0})
+                minus=$(expr $minus + ${deletes:-0})
+            fi
+    done
+    echo "+$plus -$minus"
+}
