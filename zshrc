@@ -67,7 +67,7 @@ function fuck-rebar() {
 
 function my-git-clones() {
     # we could use -execdir pwd instead, but it's not posix.
-    find ~/src ~/work ~/doc ~/edu ~/web ~/mus \
+    find ~/src ~/work ~/doc ~/edu ~/web ~/mus ~/dotfiles \
          -name .git -prune -exec dirname '{}' ';' 2>/dev/null
 }
 
