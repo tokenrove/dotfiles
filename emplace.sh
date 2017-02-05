@@ -49,7 +49,7 @@ main() {
         mkshrc muttrc \
         sbclrc screenrc signature \
         Xdefaults xsession \
-        zshenv zshrc
+        zshenv zshpath zshrc
     do
         colored "$i" maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null
     done

@@ -1,0 +1,13 @@
+# Note http://www.zsh.org/mla/users/2003/msg00600.html
+export PATH=~/bin:$PATH:~/.local/bin
+
+if [ -d ~/lib/android-sdk-linux/tools ]; then
+    export PATH=$PATH:~/lib/android-sdk-linux/tools
+fi
+
+maybe_source() { [ -r "$1" ] && source "$1" }
+
+maybe_source $HOME/.opam/opam-init/init.zsh
+maybe_source $HOME/.cargo/env
+maybe_source $HOME/.travis/travis.sh
+maybe_source $HOME/.secrets.sh

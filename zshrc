@@ -30,26 +30,13 @@ unsetopt CASE_GLOB
 alias ls="ls -F"
 
 # Note http://www.zsh.org/mla/users/2003/msg00600.html
-export PATH=$PATH:~/bin
+source ~/.zshpath
 
 if [ "$(uname)" = FreeBSD -a "$TERM" = st-256color ]; then
     TERM=xterm-256color
 fi
 
 export GPG_TTY=$(tty)
-
-# interactive shell path additions can follow:
-
-if [ -d ~/lib/android-sdk-linux/tools ]; then
-    export PATH=$PATH:~/lib/android-sdk-linux/tools
-fi
-
-maybe_source() { [ -r "$1" ] && source "$1" }
-
-maybe_source $HOME/.opam/opam-init/init.zsh
-maybe_source $HOME/.cargo/env
-maybe_source $HOME/.travis/travis.sh
-maybe_source $HOME/.secrets.sh
 
 #### COMPLETION
 

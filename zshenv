@@ -8,4 +8,4 @@ export EMAIL='julian@cipht.net'
 export ERL_TOP=$HOME/build/otp
 
 # Note http://www.zsh.org/mla/users/2003/msg00600.html
-export PATH=~/bin:$PATH:~/.local/bin
+source ~/.zshpath
