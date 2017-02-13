@@ -515,7 +515,9 @@
   (use-package company-lua))
 
 (use-package erlang
-  :config (require 'erlang-start))
+  :config
+  (require 'erlang-start)
+  (setq erlang-check-module-name t))
 
 (use-package ponylang-mode
   :config
