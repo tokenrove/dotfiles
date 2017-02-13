@@ -364,7 +364,7 @@
 ;;;; KEY BINDINGS
 
 (bind-keys
- ("M-/"      . hippie-expand)
+ ("M-/"      . dabbrev-expand)
  ("C-x C-b"  . ibuffer)
  ("C-s"      . isearch-forward-regexp)
  ("C-r"      . isearch-backward-regexp)
