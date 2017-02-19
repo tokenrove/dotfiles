@@ -52,9 +52,9 @@ if [ -z "${XMODIFIERS+x}" ]; then
 fi
 
 if which stterm; then
-    stterm -f Inconsolata-22 &
+    stterm -f Inconsolata-18 &
 else
-    st -f Inconsolata-22 &
+    st -f Inconsolata-18 &
 fi
 
 exec dwm
