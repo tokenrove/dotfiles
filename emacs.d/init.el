@@ -325,6 +325,7 @@
   :config
   (global-flycheck-mode 1)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-checkdoc)
 
   (use-package flycheck-color-mode-line
     :config
