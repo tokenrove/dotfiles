@@ -340,7 +340,9 @@
   (use-package flycheck-pony
     :config (add-to-list 'flycheck-checkers 'pony))
   (use-package flycheck-rebar3 :config (flycheck-rebar3-setup))
-  (use-package flycheck-tcl))
+  (use-package flycheck-tcl)
+  (use-package flycheck-checkpatch
+    :config (flycheck-checkpatch-setup)))
 
 (use-package logview)
 (use-package niceify-info
