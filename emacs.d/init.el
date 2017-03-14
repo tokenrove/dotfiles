@@ -66,6 +66,7 @@
 (use-package tronesque-theme :init (load-theme 'tronesque t t))
 (use-package twilight-bright-theme :init (load-theme 'twilight-bright t t))
 (use-package underwater-theme :init (load-theme 'underwater t t))
+(use-package kaolin-theme :init (load-theme 'kaolin t t))
 
 (require 'solar)
 
@@ -92,7 +93,8 @@
      sanityinc-tomorrow-night
      sea-before-storm
      tronesque
-     underwater)))
+     underwater
+     kaolin)))
 
 (show-paren-mode t)                     ; highlight parenthesis matches.
 (setq-default
