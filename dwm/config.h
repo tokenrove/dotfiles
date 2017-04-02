@@ -1,10 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+#define DEFAULT_FONT "Inconsolata-18"
 static const char *fonts[] = {
-	"monospace:size=10"
+	DEFAULT_FONT
 };
-static const char dmenufont[]       = "monospace:size=10";
+static const char dmenufont[]       = DEFAULT_FONT;
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -54,8 +55,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "x-terminal-emulator", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]  = { "stterm", "-f", "Inconsolata-18", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
