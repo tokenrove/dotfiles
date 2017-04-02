@@ -6,3 +6,7 @@ vbell off
 defscrollback 50000
 
 bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen urlview $HOME/.screen-urlview"
+
+bufferfile $HOME/.screen-exchange
+bind > eval writebuf "exec sh -c 'xsel -bi < $HOME/.screen-exchange'" "echo 'copied screen buffer to X clipboard'"
+bind < eval "exec sh -c 'xsel -bo > $HOME/.screen-exchange'" readbuf
