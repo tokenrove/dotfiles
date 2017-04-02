@@ -1,4 +1,5 @@
 build-essential
+cppcheck
 curl
 devscripts
 etckeeper
@@ -38,6 +39,7 @@ unrar
 unzip
 urlview
 valgrind
+vera++
 wavpack
 weborf
 whois
