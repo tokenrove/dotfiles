@@ -67,6 +67,7 @@
 (use-package twilight-bright-theme :init (load-theme 'twilight-bright t t))
 (use-package underwater-theme :init (load-theme 'underwater t t))
 (use-package kaolin-theme :init (load-theme 'kaolin t t))
+(use-package challenger-deep-theme :init (load-theme 'challenger-deep t t))
 
 (require 'solar)
 
@@ -94,6 +95,7 @@
      sea-before-storm
      tronesque
      underwater
+     challenger-deep
      kaolin)))
 
 (show-paren-mode t)                     ; highlight parenthesis matches.
