@@ -469,6 +469,13 @@
 (use-package java-imports)
 (use-package javadoc-lookup)
 
+(use-package scala-mode)
+(use-package ensime
+  :config
+  (setf ensime-startup-notification nil))
+(use-package flycheck-scala-sbt
+  :config (flycheck-scala-sbt-init))
+
 (use-package csharp-mode
   :mode "\\.cs$"
   :config (add-hook 'csharp-mode-hook (lambda () (local-set-key "{" 'c-electric-brace))))
