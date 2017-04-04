@@ -195,8 +195,9 @@
 
 ;;;; PACKAGES
 
-(defun js--save-and-leave-emacsclient () (interactive)
-  (save-buffer) (server-edit))
+(defun js--save-and-leave-emacsclient ()
+  (interactive) (save-buffer) (server-edit))
+(use-package muttrc-mode)
 (use-package sendmail
   :mode ("/mutt-.*" . mail-mode)
   :bind (:map mail-mode-map ("C-c C-c" . js--save-and-leave-emacsclient))
