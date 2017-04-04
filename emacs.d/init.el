@@ -347,8 +347,10 @@
 (use-package logview)
 (use-package niceify-info
   :config (add-hook 'Info-selection-hook #'niceify-info))
+
 (use-package ninja-mode)
-(use-package mingus)
+(use-package meson-mode)
+
 (use-package modern-cpp-font-lock)
 
 (use-package writegood-mode
@@ -359,7 +361,10 @@
 (use-package snakehump)
 (use-package ssh-file-modes)
 (use-package unbound)
+
+(use-package mingus)
 (use-package volume)
+
 (use-package verify-url)
 
 (use-package git-gutter
