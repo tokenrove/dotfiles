@@ -42,8 +42,9 @@ colored() {
 }
 
 main() {
+    mkdir -p ~/.emacs.d
     for i in \
-        emacs.d \
+        emacs.d/init.el \
         ccl-init.lisp \
         gitconfig gitignore \
         mkshrc muttrc \

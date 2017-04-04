@@ -474,7 +474,8 @@
 (use-package scala-mode)
 (use-package ensime
   :config
-  (setf ensime-startup-notification nil))
+  (setf ensime-startup-notification nil
+        ensime-startup-snapshot-notification nil))
 (use-package flycheck-scala-sbt
   :config (flycheck-scala-sbt-init))
 
