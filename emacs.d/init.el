@@ -337,8 +337,6 @@
 
   (use-package flycheck-checkbashisms
     :config (add-to-list 'flycheck-checkers 'sh-checkbashisms))
-  (use-package flycheck-cstyle
-    :config (add-to-list 'flycheck-checkers 'cstyle))
   (use-package flycheck-pony
     :config (add-to-list 'flycheck-checkers 'pony))
   (use-package flycheck-rebar3 :config (flycheck-rebar3-setup))
