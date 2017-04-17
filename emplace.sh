@@ -47,6 +47,7 @@ main() {
         ccl-init.lisp \
         gitconfig gitignore \
         mkshrc muttrc \
+        nixpkgs \
         sbclrc screenrc signature \
         Xdefaults xsession \
         zshenv zshpath zshrc

@@ -1,3 +1,6 @@
 [submodule "xcompose"]
 	path = vendor/xcompose
 	url = https://github.com/kragen/xcompose
+[submodule "nixpkgs/rust-nightly-nix"]
+	path = nixpkgs/rust-nightly-nix
+	url = https://github.com/solson/rust-nightly-nix.git
