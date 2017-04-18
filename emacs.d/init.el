@@ -472,6 +472,8 @@
   (use-package markdown-mode+)
   (use-package markdown-toc))
 
+(use-package toml-mode)
+
 (use-package java-imports)
 (use-package javadoc-lookup)
 
