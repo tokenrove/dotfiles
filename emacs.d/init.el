@@ -192,6 +192,12 @@
  default-tab-width 8                   ; A tab is 8 spaces is 8 spaces is 8 spaces
  apropos-do-all t)
 
+(defun sort-words (reverse begin end)
+  "Sort the words in a region."
+  (interactive "P\nr\n")
+  (let ((re "\\(?:\\s_\\|\\w\\|\\s.\\)+"))
+    (sort-regexp-fields reverse re re begin end)))
+
 
 ;;;; PACKAGES
 
