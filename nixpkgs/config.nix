@@ -28,6 +28,7 @@
     base = {
       paths = [
         curl
+        file
         git gnupg gnupg1
         nox
         pass
@@ -54,16 +55,19 @@
 
     devel = {
       paths = [
+        autoconf automake
         cargoNightly cppcheck
         erlangR19
         gcc6 gdb glibcInfo gnumake
-        man-pages
+        libtool
+        man-pages musl
         ninja
         opam
-        posix_man_pages
+        posix_man_pages python2 python3
         rebar3 rustNightly
         sbcl shellcheck
         valgrind
+        zlibStatic
       ];
     };
 
