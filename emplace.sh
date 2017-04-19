@@ -46,6 +46,7 @@ main() {
     for i in \
         emacs.d/init.el \
         ccl-init.lisp \
+        dictrc \
         gitconfig gitignore \
         mkshrc muttrc \
         nixpkgs \

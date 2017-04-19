@@ -28,6 +28,7 @@
     base = {
       paths = [
         curl
+        dict
         file
         git gnupg gnupg1
         nox
