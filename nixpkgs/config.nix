@@ -28,12 +28,17 @@
     base = {
       paths = [
         curl
-        dict
+        dict dstat
         file
         git gnupg gnupg1
-        nox
+        htop
+        inetutils
+        ncat nox
         pass
-        screen silver-searcher
+        psmisc
+        screen silver-searcher sysstat
+        tcpdump
+        unrar unzip
         zsh
       ];
     };
@@ -43,6 +48,8 @@
         dmenu dwm
         emacs
         firefox
+        gimp
+        imagemagick
         mpv
         neomutt
         pinentry python35Packages.youtube-dl
@@ -61,14 +68,15 @@
         erlangR19
         gcc6 gdb glibcInfo gnumake
         libtool
-        man-pages musl
+        man-pages mitmproxy musl
         ninja
         opam
+        pkgconfig
         posix_man_pages python2 python3
         rebar3 rustNightly
-        sbcl shellcheck
+        sbcl sbt shellcheck
         valgrind
-        zlibStatic
+        zeal zlib zlibStatic
       ];
     };
 
