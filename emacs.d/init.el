@@ -165,6 +165,7 @@
 
 (use-package compile
   :config
+  (add-hook 'compilation-mode-hook 'visual-line-mode)
   (setq compilation-scroll-output 'first-error)
   ;; handle colored output in compilation mode
   (use-package ansi-color
@@ -172,7 +173,9 @@
     (add-hook 'compilation-filter-hook
               (lambda ()
                 (when (eq major-mode 'compilation-mode)
-                  (ansi-color-apply-on-region compilation-filter-start (point-max)))))))
+                  (ansi-color-apply-on-region compilation-filter-start (point-max))))))
+  (use-package bury-successful-compilation
+    :config (bury-successful-compilation-turn-on)))
 
 (unless (eql system-type 'windows-nt)
   (use-package autorevert
@@ -275,9 +278,6 @@
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package ag)
-
-(use-package bury-successful-compilation
-  :config (bury-successful-compilation-turn-on))
 
 (use-package dictionary
   :commands (dictionary dictionary-search))
