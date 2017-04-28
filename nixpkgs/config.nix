@@ -32,10 +32,10 @@
         file
         git gnupg gnupg1
         htop
-        inetutils
+        inetutils irssi
+        jq
         ncat nox
-        pass
-        psmisc
+        parallel pass psmisc
         screen silver-searcher sysstat
         tcpdump
         unrar unzip
@@ -45,17 +45,18 @@
 
     desktop = {
       paths = [
+        acpi
         dmenu dwm
         emacs
         firefox
         gimp
-        imagemagick
+        imagemagick ipe
         mpv
         neomutt
         pinentry python35Packages.youtube-dl
         redshift
         scrot st sxiv
-        unclutter
+        unclutter urlview
         xsel
         zathura
       ];
@@ -65,15 +66,15 @@
       paths = [
         autoconf automake
         cargoNightly cppcheck
-        erlangR19
+        erlangR19 exercism
         gcc6 gdb glibcInfo gnumake
+        kcov
         libtool
         man-pages mitmproxy musl
         ninja
         opam
-        pkgconfig
-        posix_man_pages python2 python3
-        rebar3 rustNightly
+        perf-tools pkgconfig posix_man_pages python2 python3
+        rebar3 rr rustNightly
         sbcl sbt shellcheck
         valgrind
         zeal zlib zlibStatic
