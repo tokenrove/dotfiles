@@ -547,7 +547,8 @@
 (use-package erlang
   :config
   (require 'erlang-start)
-  (setq erlang-check-module-name t))
+  (setq erlang-check-module-name t)
+  (use-package company-erlang))
 
 (use-package ponylang-mode
   :config
