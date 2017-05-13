@@ -557,6 +557,12 @@
      (set-variable 'indent-tabs-mode nil)
      (set-variable 'tab-width 2))))
 
+(use-package python
+  :config
+  (use-package auto-virtualenv
+    :config
+    (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)))
+
 (use-package tuareg
   :bind (:map tuareg-mode-map ("C-c C-z" . utop)))
 
