@@ -20,6 +20,10 @@ set mbox="imaps://imap.gmail.com/[Gmail]/All Mail"
 
 #macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
 
+set query_command="goobook query %s"
+macro index,pager a "<pipe-message>goobook add<return>" "add sender to google contacts"
+bind editor <Tab> complete-query
+
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
 source ~/.mutt/gpg.rc
