@@ -3,9 +3,14 @@ cppcheck
 devscripts
 gcc-doc
 gdb
+glibc-doc
+gnuplot-x11
+grafx2
 iwyu
 make
 manpages-dev
+manpages-posix
+manpages-posix-dev
 ninja-build
 noweb
 ocaml
