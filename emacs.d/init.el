@@ -72,6 +72,8 @@
 (require 'solar)
 
 (use-package theme-changer
+  :ensure nil
+  :pin manual
   :load-path "~/src/theme-changer"
   :init
   (setq calendar-location-name "Montreal, QC"
@@ -309,6 +311,7 @@
 
 (use-package org
   :config
+  (org-reload)
   (eval-after-load 'org '(load-file "~/.emacs.d/init-org.el")))
 
 (defvar libnotify-program "/usr/bin/notify-send")

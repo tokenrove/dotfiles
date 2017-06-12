@@ -4,7 +4,7 @@
 
 XKBMODEL="pc105"
 XKBLAYOUT="us,apl"
-XKBVARIANT="dvorak"
+XKBVARIANT="dvorak,"
 XKBOPTIONS="ctrl:nocaps,compose:ralt,grp:menu_toggle"
 
 BACKSPACE="guess"

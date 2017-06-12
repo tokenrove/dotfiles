@@ -22,12 +22,24 @@ unless() {
 
 install_emacs() {
     unless emacs
-    if which apt-get; then sudo apt-get -y install libxpm-dev libgif-dev libgnutls28-dev texinfo libgtk2.0-dev; fi
+    if which apt-get; then
+        sudo apt-get -y install \
+             libxpm-dev libgif-dev libgnutls28-dev texinfo libgtk2.0-dev \
+             libjpeg-dev libtiff5-dev libxml2-dev
+    fi
     if [ "$(uname)" = FreeBSD ]; then sudo pkg install cairo; fi
     git clone git://git.savannah.gnu.org/emacs.git ~/build/emacs
     cd ~/build/emacs
     ./autogen.sh
-    ./configure --prefix=$HOME/lib/emacs --without-dbus --without-gsettings --without-libsystemd --without-toolkit-scroll-bars --with-cairo
+    ./configure --prefix=$HOME/lib/emacs \
+                --without-dbus \
+                --without-gsettings \
+                --without-libsystemd \
+                --without-toolkit-scroll-bars \
+                --with-cairo \
+                --without-pop \
+                --with-x-toolkit=gtk2 \
+                --with-xml2
     $MAKE
     $MAKE install
     ln -s ~/lib/emacs/bin/* ~/bin
@@ -35,7 +47,7 @@ install_emacs() {
 
 install_dwm() {
     unless dwm
-    if which apt-get; then sudo apt-get -y install libft-dev; fi
+    if which apt; then sudo apt build-dep -y dwm; fi
     curl -O http://dl.suckless.org/dwm/dwm-6.1.tar.gz
     tar xzf dwm-6.1.tar.gz
     cd dwm-6.1
@@ -60,9 +72,9 @@ EOF
 }
 
 install_opam() {
-    unless ~/.opam/4.04.0/ocp-indent
+    unless ~/.opam/4.04.1/ocp-indent
     opam init
-    opam switch -y 4.04.0
+    opam switch -y 4.04.1
     opam install -y merlin ocp-indent
 }
 
