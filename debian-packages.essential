@@ -3,6 +3,7 @@ etckeeper
 git
 gnupg2
 hardlink
+htop
 irssi
 irssi-plugin-xmpp
 less
