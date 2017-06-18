@@ -4,7 +4,7 @@ set spoolfile = "+INBOX"
 set postponed = "+[Gmail]/Drafts"
 set sort = threads
 
-set header_cache = "~/.cache/mutt"
+set header_cache = "~/.cache/mutt-headers"
 set message_cachedir = "~/.cache/mutt"
 
 source ~/.mutt/authinfo
