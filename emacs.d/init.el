@@ -483,6 +483,8 @@
 
 (use-package toml-mode)
 
+(use-package graphviz-dot-mode)
+
 (use-package java-imports)
 (use-package javadoc-lookup)
 
