@@ -569,6 +569,8 @@
     :config
     (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)))
 
+(use-package sage-shell-mode)
+
 (use-package tuareg
   :bind (:map tuareg-mode-map ("C-c C-z" . utop)))
 
