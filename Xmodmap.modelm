@@ -1,0 +1,5 @@
+! On my Model M, there are no Windows or Menu keys, and since I've given
+! in to modernity and use Super for some things, I make right control super
+! on this keyboard.
+remove control = Control_R
+add mod4 = Control_R

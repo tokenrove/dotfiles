@@ -13,6 +13,7 @@ if [ $HOSTNAME = temenos ]; then
     xrandr --addmode VGA1 1280x1024x60
     #xrandr --output VGA1 --mode 1280x1024x60 --rotate left
     xrandr --output VGA1 --mode 1280x1024x60
+    xmodmap ~/.Xmodmap.modelm
 fi
 
 if [ $HOSTNAME = tjur ]; then

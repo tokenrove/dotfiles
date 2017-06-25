@@ -51,7 +51,7 @@ main() {
         mkshrc muttrc \
         nixpkgs \
         sbclrc screenrc signature \
-        Xdefaults xsession \
+        Xdefaults xsession Xmodmap.modelm \
         zshenv zshpath zshrc
     do
         colored "$i" maybe ln $ln_args "$src/$i" ~/.$i 2>/dev/null
