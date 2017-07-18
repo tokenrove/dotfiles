@@ -239,7 +239,10 @@
   :config (global-hl-line-mode t))
 
 (use-package ws-butler
-  :config (ws-butler-global-mode t))
+  :config
+  (ws-butler-global-mode t)
+  ;; ws-butler mangles the dash dash space in signatures.
+  (add-hook 'mail-mode-hook (lambda () (ws-butler-mode 0))))
 
 (require 'dired-x)
 (use-package dired-rainbow)
