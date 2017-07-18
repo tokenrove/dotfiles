@@ -9,10 +9,7 @@ PATH=$HOME/bin:$PATH
 HOSTNAME=$(hostname)
 
 if [ $HOSTNAME = temenos ]; then
-    xrandr --newmode "1280x1024x60"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
-    xrandr --addmode VGA1 1280x1024x60
-    #xrandr --output VGA1 --mode 1280x1024x60 --rotate left
-    xrandr --output VGA1 --mode 1280x1024x60
+    xrandr --output DP-2 --rotate left
     xmodmap ~/.Xmodmap.modelm
 fi
 
