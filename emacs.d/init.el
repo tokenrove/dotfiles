@@ -491,6 +491,9 @@
 (use-package java-imports)
 (use-package javadoc-lookup)
 
+(use-package zeal-at-point
+  :config (global-set-key "\C-cz" 'zeal-at-point))
+
 (use-package scala-mode)
 (use-package ensime
   :config
