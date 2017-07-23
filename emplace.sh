@@ -42,6 +42,7 @@ colored() {
 }
 
 main() {
+    git submodule update --init --recursive
     mkdir -p ~/.emacs.d
     for i in \
         emacs.d/init.el emacs.d/init-org.el emacs.d/site-lisp \
