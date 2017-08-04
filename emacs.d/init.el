@@ -222,7 +222,8 @@
   (ido-mode 1)
   (ido-everywhere 1))
 (use-package flx-ido :config (flx-ido-mode t))
-(use-package ido-ubiquitous :config (ido-ubiquitous-mode 1))
+(use-package ido-completing-read+
+  :config (ido-ubiquitous-mode 1))
 (use-package smex
   :bind (([remap execute-extended-command] . smex)
          ("M-x" . smex)))
