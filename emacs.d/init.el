@@ -226,7 +226,10 @@
   :config (ido-ubiquitous-mode 1))
 (use-package smex
   :bind (([remap execute-extended-command] . smex)
-         ("M-x" . smex)))
+         ("M-x" . smex))
+  :config
+  (smex-initialize)
+  (setq smex-auto-update nil))
 (use-package idomenu)
 
 (use-package re-builder
