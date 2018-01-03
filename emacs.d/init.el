@@ -334,6 +334,7 @@
   (setq org-directory "~/org"
         org-agenda-files (list org-directory)
         js-org-journal-file (expand-file-name (concat "journal-" (format-time-string "%Y") ".org") org-directory)
+        js-org-calendar-file (expand-file-name "google-calendar.org" org-directory)
         org-modules (union org-modules '(org-habit org-depend org-protocol))
         org-default-notes-file (expand-file-name "refile.org" org-directory)
         org-capture-templates
@@ -347,7 +348,9 @@
           ("w" "org-protocol" entry (file org-default-notes-file)
            "* TODO Review %c\n%U\n  %i" :immediate-finish t)
           ("i" "Interruption" entry (file org-default-notes-file)
-           "* INTERRUPTION %?\n%U" :clock-in t :clock-resume t))
+           "* INTERRUPTION %?\n%U" :clock-in t :clock-resume t)
+          ("a" "Appointment" entry (file ,js-org-calendar-file)
+           "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n"))
         org-catch-invisible-edits 'show-and-error ; protect me
         org-extend-today-until 5        ; the day starts anew at 5am
         org-log-done '(time)            ; timestamp done tasks
@@ -390,7 +393,13 @@
         org-habit-graph-column 60)
   (use-package org-protocol :ensure nil)
   (use-package org-checklists :ensure nil)
-  (use-package ox-html5slide :defer t))
+  (use-package ox-html5slide :defer t)
+  (use-package org-gcal
+    :config
+    (let ((secret (plist-get (first (auth-source-search :host "google.com" :user "julian.squires@gmail.com-org-gcal-sync")) :secret)))
+      (setq org-gcal-client-id "235233077990-f3ti3fdembukje38lio95tjkfntimard.apps.googleusercontent.com"
+            org-gcal-client-secret (if (functionp secret) (funcall secret) secret)
+            org-gcal-file-alist `(("julian.squires@gmail.com" . ,js-org-calendar-file))))))
 
 
 (defvar libnotify-program "/usr/bin/notify-send")
