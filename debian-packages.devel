@@ -1,6 +1,8 @@
+binutils-doc
 build-essential
 cppcheck
 devscripts
+flake8
 gcc-doc
 gdb
 glibc-doc
@@ -8,6 +10,7 @@ gnuplot-x11
 grafx2
 iwyu
 make
+make-doc
 manpages-dev
 manpages-posix
 manpages-posix-dev
@@ -16,6 +19,7 @@ noweb
 ocaml
 opam
 pmccabe
+pylint3
 qemu
 shellcheck
 similarity-tester
@@ -25,3 +29,4 @@ tcl8.6-dev
 valgrind
 vera++
 yasm
+zeal

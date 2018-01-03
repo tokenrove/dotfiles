@@ -22,6 +22,7 @@ silversearcher-ag
 sqlite3
 ssh-client
 ssmtp
+strace
 traceroute
 unrar
 unzip
