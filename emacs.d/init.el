@@ -206,6 +206,8 @@
 
 ;;;; PACKAGES
 
+(use-package auth-password-store :config (auth-pass-enable))
+
 (defun js--save-and-leave-emacsclient ()
   (interactive) (save-buffer) (server-edit))
 (use-package muttrc-mode)
