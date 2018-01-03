@@ -316,10 +316,80 @@
 
 (use-package midnight)
 
+;;; Still to decide:
+;;;  - NEXT as tag or as todo state
+;;;  - STARTED as todo state or indicated by clocking
 (use-package org
+  :defer t
+  :bind
+  (("<f12>" . org-agenda)
+   ("<f11>" . org-clock-goto)
+   ("C-M-r" . org-capture))
   :config
-  (org-reload)
-  (eval-after-load 'org '(load-file "~/.emacs.d/init-org.el")))
+  ;; don't fuck with my C-,
+  (add-hook 'org-mode-hook
+            (lambda () (define-key org-mode-map [?\C-,] (lookup-key global-map [?\C-x]))))
+  (setq org-directory "~/org"
+        org-agenda-files (list org-directory)
+        js-org-journal-file (expand-file-name (concat "journal-" (format-time-string "%Y") ".org") org-directory)
+        org-modules (union org-modules '(org-habit org-depend org-protocol))
+        org-default-notes-file (expand-file-name "refile.org" org-directory)
+        org-capture-templates
+        `(("t" "todo" entry (file org-default-notes-file)
+           "* TODO %?\nSCHEDULED: %^t\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+          ("n" "note" entry (file org-default-notes-file)
+           "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
+          ;; Need to fix this up so it reuses the existing heading, at some point
+          ("j" "Journal" entry (file+olp+datetree ,js-org-journal-file)
+           "* %U\n\n%?" :clock-in t :clock-resume t)
+          ("w" "org-protocol" entry (file org-default-notes-file)
+           "* TODO Review %c\n%U\n  %i" :immediate-finish t)
+          ("i" "Interruption" entry (file org-default-notes-file)
+           "* INTERRUPTION %?\n%U" :clock-in t :clock-resume t))
+        org-catch-invisible-edits 'show-and-error ; protect me
+        org-extend-today-until 5        ; the day starts anew at 5am
+        org-log-done '(time)            ; timestamp done tasks
+        org-log-into-drawer t           ; tidier
+        org-clock-out-remove-zero-time-clocks t
+        org-clock-idle-time 5
+        ;; XXX should probably make sure this exists on the system
+        org-clock-x11idle-program-name "xprintidle"
+        org-x11idle-exists-p t
+        ;; log mode is a nicer way to see the day
+        org-agenda-log-mode-items '(closed clock state)
+        org-agenda-start-with-log-mode t
+        org-agenda-span 1               ; show one day by default
+        org-agenda-todo-ignore-deadlines 'far ; show upcoming deadlines
+        org-agenda-todo-ignore-scheduled 'future
+        org-agenda-skip-deadline-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-compact-blocks t     ; XXX nicer?
+        org-use-speed-commands t        ; single-char commands
+        org-yank-adjusted-subtrees t
+        org-todo-keywords '((sequence
+                             "TODO(t)" "WAITING(w@/!)" "SOMEDAY(S!)" "|"
+                             "DONE(d!/!)" "CANCELLED(c@/@)" "DELEGATED(D@/@)"))
+        org-todo-state-tags-triggers '(("CANCELLED" ("CANCELLED" . t))
+                                       ("WAITING" ("WAITING" . t))
+                                       ("SOMEDAY" ("WAITING" . t))
+                                       ("DELEGATED" ("WAITING" . t))
+                                       (done ("WAITING"))
+                                       ("TODO" ("WAITING") ("CANCELLED"))
+                                       ("DONE" ("WAITING") ("CANCELLED")))
+        org-agenda-custom-commands '(("w" "Waiting and Postponed tasks" todo "WAITING|SOMEDAY"
+                                      ((org-agenda-overriding-header "Waiting Tasks")))
+                                     ("r" "Refile New Notes and Tasks" tags "REFILE"
+                                      ((org-agenda-todo-ignore-with-date nil)
+                                       (org-agenda-todo-ignore-deadlines nil)
+                                       (org-agenda-todo-ignore-scheduled nil)
+                                       (org-agenda-todo-ignore-timestamp nil)
+                                       (org-agenda-overriding-header "Tasks to Refile"))))
+        org-habit-graph-column 60)
+  (use-package org-protocol :ensure nil)
+  (use-package org-checklists :ensure nil)
+  (use-package ox-html5slide :defer t))
+
 
 (defvar libnotify-program "/usr/bin/notify-send")
 (defun notify-send (title message)
