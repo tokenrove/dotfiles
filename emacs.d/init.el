@@ -396,7 +396,9 @@
                                        (org-agenda-todo-ignore-deadlines nil)
                                        (org-agenda-todo-ignore-scheduled nil)
                                        (org-agenda-todo-ignore-timestamp nil)
-                                       (org-agenda-overriding-header "Tasks to Refile"))))
+                                       (org-agenda-overriding-header "Tasks to Refile")))
+                                     ("g" "Goals" tags "GOAL"
+                                      ((org-agenda-overriding-header "Goals to Review"))))
         org-habit-graph-column 60)
   (use-package org-protocol :ensure nil)
   (use-package org-checklists :ensure nil)
