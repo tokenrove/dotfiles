@@ -341,7 +341,7 @@
   (setq org-directory "~/org"
         org-agenda-files (list org-directory)
         js-org-journal-file (expand-file-name (concat "journal-" (format-time-string "%Y") ".org") org-directory)
-        js-org-calendar-file (expand-file-name "google-calendar.org" org-directory)
+        js-org-calendar-file (expand-file-name "gcal-julian-squires.org" org-directory)
         org-modules (union org-modules '(org-habit org-depend org-protocol))
         org-default-notes-file (expand-file-name "refile.org" org-directory)
         org-capture-templates
@@ -406,7 +406,8 @@
     (let ((secret (plist-get (first (auth-source-search :host "google.com" :user "julian.squires@gmail.com-org-gcal-sync")) :secret)))
       (setq org-gcal-client-id "235233077990-f3ti3fdembukje38lio95tjkfntimard.apps.googleusercontent.com"
             org-gcal-client-secret (if (functionp secret) (funcall secret) secret)
-            org-gcal-file-alist `(("julian.squires@gmail.com" . ,js-org-calendar-file))))))
+            org-gcal-file-alist `(("julian.squires@gmail.com" . ,js-org-calendar-file)
+                                  ("5ue11dmljhbprf3p63sn7l01q4@group.calendar.google.com" . ,(expand-file-name "gcal-local-504.org" org-directory)))))))
 
 
 (defvar libnotify-program "/usr/bin/notify-send")
