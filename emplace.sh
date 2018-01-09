@@ -48,7 +48,7 @@ main() {
         emacs.d/init.el emacs.d/init-org.el emacs.d/site-lisp \
         ccl-init.lisp \
         dictrc \
-        gitconfig gitignore \
+        gitconfig gitignore goobookrc \
         mkshrc muttrc \
         nixpkgs \
         sbclrc screenrc signature \

@@ -1,0 +1,3 @@
+[DEFAULT]
+# otherwise most contacts are missing
+filter_groupless_contacts: no
