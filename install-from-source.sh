@@ -48,7 +48,7 @@ install_emacs() {
 install_dwm() {
     unless dwm
     if which apt; then sudo apt build-dep -y dwm; fi
-    curl -O http://dl.suckless.org/dwm/dwm-6.1.tar.gz
+    curl -O https://dl.suckless.org/dwm/dwm-6.1.tar.gz
     tar xzf dwm-6.1.tar.gz
     cd dwm-6.1
     cp ~/dotfiles/dwm/config.h .
