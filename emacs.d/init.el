@@ -66,7 +66,10 @@
 (use-package tronesque-theme :init (load-theme 'tronesque t t))
 (use-package twilight-bright-theme :init (load-theme 'twilight-bright t t))
 (use-package underwater-theme :init (load-theme 'underwater t t))
-(use-package kaolin-theme :init (load-theme 'kaolin t t))
+(use-package kaolin-themes
+  :init
+  (dolist (theme '(kaolin-dark kaolin-ocean kaolin-light kaolin-galaxy kaolin-eclipse))
+    (load-theme theme t t)))
 (use-package challenger-deep-theme :init (load-theme 'challenger-deep t t))
 
 (require 'solar)
@@ -83,6 +86,7 @@
   (change-theme
    '(goose
      hydandata-light
+     kaolin-light
      organic-green
      sanityinc-tomorrow-day
      silkworm
@@ -91,14 +95,17 @@
      twilight-bright)
    '(abyss
      cyberpunk
+     kaolin-dark
+     kaolin-eclipse
+     kaolin-galaxy
+     kaolin-ocean
      mbo70s
      sanityinc-tomorrow-eighties
      sanityinc-tomorrow-night
      sea-before-storm
      tronesque
      underwater
-     challenger-deep
-     kaolin)))
+     challenger-deep)))
 
 (show-paren-mode t)                     ; highlight parenthesis matches.
 (setq-default
