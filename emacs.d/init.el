@@ -587,12 +587,6 @@
   :config (global-set-key "\C-cz" 'zeal-at-point))
 
 (use-package scala-mode)
-(use-package ensime
-  :config
-  (setf ensime-startup-notification nil
-        ensime-startup-snapshot-notification nil))
-(use-package flycheck-scala-sbt
-  :config (flycheck-scala-sbt-init))
 
 (use-package csharp-mode
   :mode "\\.cs$"
