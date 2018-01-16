@@ -400,7 +400,7 @@
         org-habit-graph-column 60)
   (use-package org-protocol :ensure nil)
   (use-package org-checklists :ensure nil)
-  (use-package ox-html5slide :defer t)
+  (use-package ox-ioslide :defer t)
   (use-package org-gcal
     :config
     (let ((secret (plist-get (first (auth-source-search :host "google.com" :user "julian.squires@gmail.com-org-gcal-sync")) :secret)))
