@@ -540,6 +540,11 @@
 (use-package elisp-slime-nav
   :config (add-hook 'emacs-lisp-mode-hook #'elisp-slime-nav-mode))
 
+(use-package x86-lookup
+  :config
+  (setq x86-lookup-pdf "~/ref/325383-sdm-vol-2abcd.pdf"))
+(use-package nasm-mode)
+
 (use-package cc-mode
   :config
   (use-package cwarn
