@@ -547,6 +547,15 @@
 
 (use-package cc-mode
   :config
+  (c-add-style "backtrace"
+              '("bsd"
+                (c-syntactic-indentation-in-macros . nil)
+                (c-hanging-braces-alist
+                 (block-close . c-snug-do-while))
+                (c-offsets-alist
+                 (arglist-cont-nonempty . *)
+                 (statement-cont . *))
+                (indent-tabs-mode . t)))
   (use-package cwarn
     :config (global-cwarn-mode t))
   (use-package c-eldoc
