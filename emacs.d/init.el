@@ -715,6 +715,8 @@
   (use-package flycheck-rust
     :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
+(use-package yaml-mode)
+
 
 ;;;; finally...
 
