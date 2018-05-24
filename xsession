@@ -36,7 +36,7 @@ xrdb .Xdefaults
 
 #arbtt-capture &
 
-xwrits &
+xwrits breaktime=3 +clock +quota after=5 +finger &
 
 redshift -l 45.5:-73.56 &
 
