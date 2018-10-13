@@ -213,7 +213,7 @@
 
 ;;;; PACKAGES
 
-(use-package auth-password-store :config (auth-pass-enable))
+(use-package auth-source-pass :config (auth-source-pass-enable))
 
 (defun js--save-and-leave-emacsclient ()
   (interactive) (save-buffer) (server-edit))
